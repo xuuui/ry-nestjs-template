@@ -35,5 +35,7 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
-# app-resouce
+# app
 /public
+/logs
+.init.lock.txt
