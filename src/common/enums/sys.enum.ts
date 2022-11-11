@@ -5,6 +5,7 @@ export enum EHttpStatus {
   FAIL = 'fail',
   SUCCESS = 'success',
 }
+
 /**
  * @description: 账户类型
  */
@@ -22,6 +23,7 @@ export enum EAccountType {
    */
   CLIENT = 'client',
 }
+
 /**
  * @description: 第三方平台
  */
@@ -29,6 +31,7 @@ export enum EThirdPlatform {
   MP_WEIXIN = 'mp_weixin',
   GZH_WEIXIN = 'gzh_weixin',
 }
+
 /**
  * @description: 资源类型
  */
@@ -46,6 +49,7 @@ export enum EResourceType {
    */
   BUTTON = 'button',
 }
+
 /**
  * @description: 资源权限
  */
@@ -55,6 +59,7 @@ export enum EResourcePermission {
   EDIT = 'edit',
   DEL = 'del',
 }
+
 /**
  * @description: 字典类型
  */
@@ -62,6 +67,7 @@ export enum EDictType {
   DICT = 'dict',
   DICT_ITEM = 'dict_item',
 }
+
 /**
  * @description: 操作类型
  */
@@ -74,6 +80,7 @@ export enum EOpertateType {
   DEL = 'del',
   OTHER = 'other',
 }
+
 /**
  * @description: 余额变动类型
  */

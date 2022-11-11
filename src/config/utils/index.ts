@@ -1,5 +1,5 @@
 import { getEnv } from '@/utils/env'
-import { isNaN, isUndefined, mergeWith } from 'lodash-es'
+import { isNaN, isUndefined, mergeWith } from 'lodash'
 
 /**
  * @description: 合并环境配置

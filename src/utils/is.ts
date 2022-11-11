@@ -1,4 +1,4 @@
-import { isFunction, isNull, isObject, isUndefined } from 'lodash-es'
+import { isFunction, isNull, isObject, isUndefined } from 'lodash'
 
 const { toString } = Object.prototype
 

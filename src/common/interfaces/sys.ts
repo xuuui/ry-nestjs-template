@@ -1,5 +1,7 @@
 import { Request, Response } from 'express'
-import { EAccountType, EOpertateType } from '../enums/sys'
+import { Routes } from '@nestjs/core'
+import { Type } from '@nestjs/common'
+import { EAccountType, EOpertateType } from '../enums/sys.enum'
 
 export type TreeItem = {
   parentId: string
@@ -12,6 +14,11 @@ export interface AuthInfo {
   accountType: EAccountType
   userId: string
   username: string
+}
+
+export interface RouteMetadata {
+  path: string
+  children?: Routes | Type<any>[] | string[]
 }
 
 export interface HttpLogInfo {

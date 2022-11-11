@@ -1,0 +1,9 @@
+export const RES_TRANSFORM = 'RES_TRANSFORM'
+
+export const ROUTE_METEDATA = 'ROUTE_METEDATA'
+
+export const JWT_AUTH = 'JWT_AUTH'
+
+export const OPERATE_LOG = 'OPERATE_LOG'
+
+export const OPERATE_OPTIONS = 'OPERATE_OPTIONS'
