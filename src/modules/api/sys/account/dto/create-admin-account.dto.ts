@@ -5,6 +5,8 @@ import { NumberValidator } from '@/common/decorators/class-validator/number.deco
 import { StringValidator } from '@/common/decorators/class-validator/string.decorator'
 import { SysDto } from '@/common/dto/sys.dto'
 import { EAccountType } from '@/common/enums/sys.enum'
+import { Type } from '@nestjs/common'
+import { OmitType } from '@nestjs/swagger'
 import { CreateUserDto } from '../../user/dto/create-user.dto'
 
 export class CreateAdminAccountDto extends SysDto {
@@ -61,8 +63,8 @@ export class CreateAdminAccountDto extends SysDto {
    * @description: 创建用户信息
    * @return {*}
    */
-  @NestedValidator(CreateUserDto, {
+  @NestedValidator(OmitType(CreateUserDto, ['accountId']), {
     optional: true,
   })
-  user?: CreateUserDto
+  user?: Omit<CreateUserDto, 'accountId'>
 }

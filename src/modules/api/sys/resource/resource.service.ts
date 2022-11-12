@@ -22,6 +22,8 @@ import {
   Transaction,
   useTransaction,
 } from '@ry-nestjs/typeorm-transactional-next'
+import { lowerCase } from 'change-case-all'
+import { toCamelCase } from '@/utils/func'
 
 @Injectable()
 export class ResourceService extends BaseService<ResourceEntity> {
@@ -207,14 +209,20 @@ export class ResourceService extends BaseService<ResourceEntity> {
     await this.insertTree(resource.id, resource.parentId)
 
     if (resource.type === EResourceType.MENU && resource.component) {
+      const permissionMap = {
+        [EResourcePermission.ADD]: '新增',
+        [EResourcePermission.EDIT]: '编辑',
+        [EResourcePermission.DEL]: '删除',
+        [EResourcePermission.VIEW]: '查看',
+      }
       for (let key in EResourcePermission) {
         await this.createOne({
-          title: EResourcePermission[key] + resource.title,
+          title: permissionMap[EResourcePermission[key]] + resource.title,
           type: EResourceType.BUTTON,
-          name: resource.name + ':' + key,
+          name: resource.name + toCamelCase(lowerCase(key)),
           permission: resource.name + ':' + key,
           parentId: resource.id,
-          isSys: 1,
+          isSys: createDto.isSys,
           accountType: resource.accountType,
         })
       }

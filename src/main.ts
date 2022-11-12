@@ -14,6 +14,7 @@ import { ParseQueryJsonPipe } from './common/pipes/parse-query-json.pipe'
 import { AppService } from './app/app.service'
 import { getLocalIp, getNanoid } from './utils/func'
 import { getEnv } from './utils/env'
+import fileUpload from 'express-fileupload'
 
 const setupSwagger = (app: NestExpressApplication) => {
   const swaggerConfig = new DocumentBuilder()
@@ -75,6 +76,12 @@ async function bootstrap() {
   app.use(requestIp.mw())
   app.use(compression())
   app.use(xmlparser())
+  app.use(
+    fileUpload({
+      defParamCharset: 'utf8',
+      limits: { fileSize: 3 * 1024 * 1024 },
+    }),
+  )
 
   // swagger
   setupSwagger(app)

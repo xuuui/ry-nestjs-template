@@ -38,4 +38,4 @@ lerna-debug.log*
 # app
 /public
 /logs
-.init.lock.txt
+init.lock.txt

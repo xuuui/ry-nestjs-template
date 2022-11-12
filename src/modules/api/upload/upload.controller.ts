@@ -1,13 +1,7 @@
-import { AppService } from '@/app/app.service'
-import {
-  Controller,
-  Get,
-  Post,
-  UploadedFile,
-  UseInterceptors,
-} from '@nestjs/common'
-import { FileInterceptor } from '@nestjs/platform-express'
+import { Controller, Get, Post, Req } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
+import { Request } from 'express'
+import { UploadedFile } from 'express-fileupload'
 import { QiniuService } from './qiniu.service'
 import { UploadService } from './upload.service'
 
@@ -17,19 +11,12 @@ export class UploadController {
   constructor(
     private readonly qiniuService: QiniuService,
     private readonly service: UploadService,
-    private readonly app: AppService,
   ) {}
 
-  @UseInterceptors(FileInterceptor('file'))
   @Post()
-  async upload(
-    @UploadedFile()
-    file: Express.Multer.File,
-  ) {
-    if (file.size > 1024 * 1024 * 0.4) {
-      await this.service.compressImage(file.path)
-    }
-    return this.app.getFileUrl(file.path)
+  async upload(@Req() req: Request) {
+    const files = req.files as Recordable<UploadedFile>
+    return await this.service.saveFile(files['file'])
   }
 
   @Get('/getQiniuToken')

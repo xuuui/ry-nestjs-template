@@ -1,5 +1,12 @@
 import { ActionFailException } from '@/common/exceptions/action-fail.exception'
-import { Body, Controller, Get, Post, Query } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Query,
+  UnauthorizedException,
+} from '@nestjs/common'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { AccountService } from '../account/account.service'
 import { AdminLoginDto } from './dto/admin-login.dto'
@@ -14,6 +21,8 @@ import { ThirdAuthService } from './third-atuh.service'
 import { AuthService } from './auth.service'
 import { WxMpRegisterDto } from './dto/wx-mp-register.dto'
 import { comparePassword } from '@/utils/func'
+import { AppService } from '@/app/app.service'
+import { JwtAuth } from '@/common/decorators/jwt-auth.decorator'
 
 @ApiTags('验证模块')
 @Controller()
@@ -23,6 +32,7 @@ export class AuthController {
     private readonly accountService: AccountService,
     private readonly wxMpService: WxMpService,
     private readonly thirdAuthService: ThirdAuthService,
+    private readonly app: AppService,
   ) {}
 
   @ApiOperation({ summary: '后台登录' })
@@ -45,10 +55,11 @@ export class AuthController {
       throw new ActionFailException('密码错误')
     }
     await this.service.checkCaptcha(random, captcha)
-    const { user, token } = await this.service.accountLogin(account)
+    const loginAccount = await this.service.getLoginAccount(account)
+    const token = await this.service.setToken(loginAccount)
     return {
       token,
-      user,
+      account: loginAccount,
     }
   }
 
@@ -88,18 +99,12 @@ export class AuthController {
       accountType: EAccountType.CLIENT,
     })
 
-    const isSubscribeGzh = !!(await this.thirdAuthService.findOneBy({
-      mobile: thirdAuthMp.mobile,
-      thirdPlatform: EThirdPlatform.GZH_WEIXIN,
-    }))
+    const loginAccount = await this.service.getLoginAccount(account)
+    const token = await this.service.setToken(loginAccount)
 
-    const { user, token } = await this.service.accountLogin(account)
     return {
       token,
-      user: {
-        ...user,
-        isSubscribeGzh,
-      },
+      account: loginAccount,
       openid,
       unionid,
     }
@@ -128,17 +133,13 @@ export class AuthController {
         mobile,
       })
     }
-    const isSubscribeGzh = !!(await this.thirdAuthService.findOneBy({
-      mobile: thirdAuthMp.mobile,
-      thirdPlatform: EThirdPlatform.GZH_WEIXIN,
-    }))
-    const { user, token } = await this.service.accountLogin(account)
+
+    const loginAccount = await this.service.getLoginAccount(account)
+    const token = await this.service.setToken(loginAccount)
+
     return {
       token,
-      user: {
-        ...user,
-        isSubscribeGzh,
-      },
+      account: loginAccount,
       openid,
       unionid,
     }
@@ -149,5 +150,19 @@ export class AuthController {
   async wxMpGetPhoneNumber(@Query('code') code: string) {
     const mobile = await this.wxMpService.getPhoneNumber(code)
     return mobile
+  }
+
+  @ApiOperation({ summary: '获取当前登录账户信息' })
+  @JwtAuth()
+  @Get('/getLoginAccount')
+  async getLoginAccount() {
+    const accountId = this.app.getAuthInfo().accountId
+    const account = await this.accountService.findOneBy({
+      id: accountId,
+    })
+    if (!account) {
+      throw new UnauthorizedException('登录会话无效，请重新登录')
+    }
+    return await this.service.getLoginAccount(account)
   }
 }

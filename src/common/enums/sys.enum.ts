@@ -7,6 +7,17 @@ export enum EHttpStatus {
 }
 
 /**
+ * @description: 系统字典编码
+ */
+export enum ESysDictCode {
+  SYS_YES_NO = 'sys_yes_no',
+  SYS_SEX = 'sys_sex',
+  SYS_STATE = 'sys_state',
+  SYS_OPERATE_TYPE = 'sys_operate_type',
+  SYS_BALANCE_CHANGE_TYPE = 'sys_balance_change_type',
+}
+
+/**
  * @description: 账户类型
  */
 export enum EAccountType {

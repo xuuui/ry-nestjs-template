@@ -37,6 +37,9 @@ export interface AppConfig {
     username: string
     password: string
   }
+  upload: {
+    imageCompressSize: number
+  }
 }
 /**
  * @description: jwt配置

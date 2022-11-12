@@ -4,7 +4,7 @@ import { NumberValidator } from '@/common/decorators/class-validator/number.deco
 import { StringValidator } from '@/common/decorators/class-validator/string.decorator'
 import { SysDto } from '@/common/dto/sys.dto'
 import { UpdateDto } from '@/common/dto/update.dto'
-import { IntersectionType } from '@nestjs/swagger'
+import { IntersectionType, OmitType } from '@nestjs/swagger'
 import { UpdateUserDto } from '../../user/dto/update-user.dto'
 
 export class UpdateAdminAccountDto extends IntersectionType(UpdateDto, SysDto) {
@@ -41,8 +41,8 @@ export class UpdateAdminAccountDto extends IntersectionType(UpdateDto, SysDto) {
   })
   roleIds?: string[]
 
-  @NestedValidator(UpdateUserDto, {
+  @NestedValidator(OmitType(UpdateUserDto, ['id']), {
     optional: true,
   })
-  user?: UpdateUserDto
+  user?: Omit<UpdateUserDto, 'id'>
 }

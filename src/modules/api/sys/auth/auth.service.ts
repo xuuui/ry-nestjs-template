@@ -9,6 +9,9 @@ import { AccountIdentityService } from '../account/account-identity.service'
 import { UserService } from '../user/user.service'
 import ms from 'ms'
 import { ActionFailException } from '@/common/exceptions/action-fail.exception'
+import { ThirdAuthService } from './third-atuh.service'
+import { EThirdPlatform } from '@/common/enums/sys.enum'
+import { AuthInfo } from '@/common/interfaces/sys'
 
 @Injectable()
 export class AuthService {
@@ -20,40 +23,45 @@ export class AuthService {
     private readonly accountIdentityService: AccountIdentityService,
     private readonly userService: UserService,
     private readonly jwtAuthService: JwtAuthService,
+    private readonly thirdAuthService: ThirdAuthService,
   ) {}
 
-  async accountLogin(account: AccountModel) {
+  async getLoginAccount(account: AccountModel): Promise<AccountModel> {
     const identity = await this.accountIdentityService.findOneBy({
       accountId: account.id,
     })
     const user = await this.userService.findOneBy({
       accountId: account.id,
     })
-    const token = this.jwtAuthService.generateToken({
-      userId: user.id,
+    const isSubscribeGzh = !!(await this.thirdAuthService.findOneBy({
+      mobile: account.mobile,
+      thirdPlatform: EThirdPlatform.GZH_WEIXIN,
+    }))
+      ? 1
+      : 0
+    return {
+      ...account,
+      identity,
+      user,
+      isSubscribeGzh,
+    }
+  }
+
+  async setToken(account: AccountModel) {
+    const authInfo: AuthInfo = {
+      userId: account.user.id,
       accountId: account.id,
       username: account.username,
       accountType: account.accountType,
-    })
+    }
+    const token = this.jwtAuthService.generateToken(authInfo)
+    this.app.setAuthInfo(authInfo)
     await this.redisCache.set(
-      this.redisCache.getTokenKey(account.id, account.accountType),
+      this.redisCache.getTokenKey(authInfo.accountId, authInfo.accountType),
       token,
       ms(this.jwtCfg.signOptions.expiresIn.toString()),
     )
-    this.app.setAuthInfo({
-      accountId: account.id,
-      userId: user.id,
-      username: account.username,
-      accountType: account.accountType,
-    })
-    return {
-      user: {
-        ...account,
-        identity,
-        user,
-      },
-      token,
-    }
+    return token
   }
 
   async checkCaptcha(random: string, captcha: string) {

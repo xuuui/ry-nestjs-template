@@ -154,7 +154,7 @@ export class AccountService extends BaseService<AccountEntity> {
     })
     // 绑定账户角色
     if (Array.isArray(roleIds)) {
-      this.setAccountRoles(account.id, roleIds)
+      await this.setAccountRoles(account.id, roleIds)
     }
     return {
       ...account,
@@ -193,7 +193,7 @@ export class AccountService extends BaseService<AccountEntity> {
 
     // 绑定账户角色
     if (Array.isArray(roleIds)) {
-      this.setAccountRoles(account.id, roleIds)
+      await this.setAccountRoles(account.id, roleIds)
     }
     return true
   }

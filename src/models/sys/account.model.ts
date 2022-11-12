@@ -1,4 +1,5 @@
 import { NestedValidator } from '@/common/decorators/class-validator/nested.decorator'
+import { NumberValidator } from '@/common/decorators/class-validator/number.decorator'
 import { AccountEntity } from '@/entities/sys/account.entity'
 import { AccountIdentityModel } from './account-identity.model'
 import { RoleModel } from './role.model'
@@ -20,4 +21,7 @@ export class AccountModel extends AccountEntity {
     each: true,
   })
   roles?: RoleModel[]
+
+  @NumberValidator()
+  isSubscribeGzh?: number
 }
