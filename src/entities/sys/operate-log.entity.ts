@@ -1,8 +1,10 @@
 import { BaseEntity } from '@/common/base/base.entity'
 import { DateStringValidator } from '@/common/decorators/class-validator/date-string.decorator'
 import { EnumValidator } from '@/common/decorators/class-validator/enum.decorator'
+import { NestedValidator } from '@/common/decorators/class-validator/nested.decorator'
 import { NumberValidator } from '@/common/decorators/class-validator/number.decorator'
 import { StringValidator } from '@/common/decorators/class-validator/string.decorator'
+import { JsonColumn } from '@/common/decorators/typeorm/JsonColumn.decorator'
 import { EAccountType, EOpertateType } from '@/common/enums/sys.enum'
 import { datetimeTransformer } from '@/utils/typeorm'
 import { Column, Entity, Index } from 'typeorm'
@@ -45,6 +47,18 @@ export class OperateLogEntity extends BaseEntity {
   })
   @StringValidator()
   operateIpAddress: string
+
+  @JsonColumn({
+    comment: '请求query',
+  })
+  @NestedValidator(Object)
+  reqQuery: object
+
+  @JsonColumn({
+    comment: '请求body',
+  })
+  @NestedValidator(Object)
+  reqBody: object
 
   @Column({
     comment: '接口路径',

@@ -50,6 +50,8 @@ export class OperateLogService extends BaseService<OperateLogEntity> {
         operateDesc: desc || this.getDefOperateDesc(options.type, authInfo),
         operateIp: clientIp,
         operateIpAddress: ipAddress,
+        reqQuery: req.query,
+        reqBody: req.body,
         apiPath: req.path,
         accountType: authInfo.accountType,
       })

@@ -40,24 +40,3 @@ export function datetimeTransformer(
     },
   }
 }
-
-/**
- * @description: 金额字段
- * @param {ColumnOptions} options
- * @return {*}
- */
-export function AmountColumn(
-  options?: ColumnOptions,
-): ReturnType<typeof applyDecorators> {
-  return applyDecorators(
-    Column('decimal', {
-      precision: 10,
-      scale: 2,
-      transformer: {
-        from: Number,
-        to: Number,
-      },
-      ...options,
-    }),
-  )
-}
