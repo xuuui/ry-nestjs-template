@@ -6,18 +6,22 @@ import {
 } from '@/common/enums/sys.enum'
 import appConfig from '@/config/app.config'
 import { DictModel } from '@/models/sys/dict.model'
-import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common'
+import { Inject, Injectable, OnModuleInit } from '@nestjs/common'
 import { ConfigType } from '@nestjs/config'
 import { ensureFileSync, existsSync } from 'fs-extra'
 import { AccountService } from '../api/sys/account/account.service'
 import { DictService } from '../api/sys/dict/dict.service'
 import { ResourceService } from '../api/sys/resource/resource.service'
+import { Log4jLoggerService } from '../logger/log4j-logger.service'
+import { InjectLogger } from '../logger/logger.decorator'
 
 const INIT_LOCK_FILE = 'init.lock.txt'
 
 @Injectable()
 export class InitService implements OnModuleInit {
   constructor(
+    @InjectLogger(InitService.name)
+    private readonly logger: Log4jLoggerService,
     @Inject(appConfig.KEY)
     private readonly appCfg: ConfigType<typeof appConfig>,
     private readonly accountService: AccountService,
@@ -26,14 +30,21 @@ export class InitService implements OnModuleInit {
   ) {}
 
   async onModuleInit() {
-    if (!existsSync(INIT_LOCK_FILE)) {
-      Logger.log('初始化数据库', 'InitModule')
+    const { username } = this.appCfg.defaltAccount
+    const isAdminExist = await this.accountService.isUsernameExist(
+      {
+        value: username,
+      },
+      EAccountType.MANAGE,
+    )
+    if (!isAdminExist && !existsSync(INIT_LOCK_FILE)) {
+      this.logger.log('初始化数据库')
       await this.initDict()
       await this.initResource()
       await this.initAdmin()
       ensureFileSync(INIT_LOCK_FILE)
     } else {
-      Logger.log('已初始化数据库', 'InitModule')
+      this.logger.log('已初始化数据库')
     }
   }
 
@@ -54,7 +65,7 @@ export class InitService implements OnModuleInit {
         accountType: EAccountType.MANAGE,
       })
     }
-    Logger.log(`默认管理员初始化完成 ${username} ${password}`, 'InitModule')
+    this.logger.log(`默认管理员初始化完成 ${username} ${password}`)
   }
 
   private async generateDictItems(
@@ -178,7 +189,7 @@ export class InitService implements OnModuleInit {
         value: '1',
       },
     ])
-    Logger.log('字典初始化完成', 'InitModule')
+    this.logger.log('字典初始化完成')
   }
 
   private async initResource(): Promise<void> {
@@ -253,6 +264,6 @@ export class InitService implements OnModuleInit {
       isSys: 1,
       sort: 4,
     })
-    Logger.log('菜单初始化完成', 'InitModule')
+    this.logger.log('菜单初始化完成')
   }
 }

@@ -1,5 +1,5 @@
 import { TypeormConfig } from '@/config/types'
-import { TypeOrmLogger } from '@/modules/logger/log4j'
+import { TypeOrmLogger } from '@/modules/logger/typeorm-logger'
 import { ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 

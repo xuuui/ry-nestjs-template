@@ -22,8 +22,8 @@ export class ResourceController {
   @ApiOperation({ summary: '获取当前用户菜单列表' })
   @Get('/getMenuTree')
   async getMenuTree(): Promise<ResourceModel[]> {
-    const accountId = this.app.getAuthInfo().accountId
-    return await this.service.getMenuTree(accountId)
+    const { accountId, accountType } = this.app.getAuthInfo()
+    return await this.service.getMenuTree(accountId, accountType)
   }
 
   @ApiOperation({ summary: '获取当前用户资源列表' })
@@ -42,8 +42,8 @@ export class ResourceController {
   @ApiOperation({ summary: '获取当前用户按钮权限列表' })
   @Get('/getPermCodeList')
   async getPermCodeList(): Promise<string[]> {
-    const accountId = this.app.getAuthInfo().accountId
-    return await this.service.getPermCodeList(accountId)
+    const { accountId, accountType } = this.app.getAuthInfo()
+    return await this.service.getPermCodeList(accountId, accountType)
   }
 
   @ApiOperation({ summary: '创建' })

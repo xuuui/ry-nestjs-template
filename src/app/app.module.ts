@@ -19,17 +19,16 @@ import { setupConfig } from './setup/config'
 import { setupServeStatic } from './setup/serve-static'
 import { setupRateLimiter } from './setup/rate-limiter'
 import { setupTypeorm } from './setup/typeorm'
+import { setupCls } from './setup/cls'
 
 @Global()
 @Module({
   imports: [
     setupConfig(),
     setupServeStatic(),
-    LoggerModule,
+    LoggerModule.forRoot(),
     SharedModule,
-    ClsModule.forRoot({
-      global: true,
-    }),
+    setupCls(),
     setupRateLimiter(),
     setupTypeorm(),
     EntitiesModule,
@@ -64,7 +63,13 @@ import { setupTypeorm } from './setup/typeorm'
     },
     AppService,
   ],
-  exports: [AppService, RateLimiterModule],
+  exports: [
+    AppService,
+    LoggerModule,
+    EntitiesModule,
+    SharedModule,
+    RateLimiterModule,
+  ],
   controllers: [AppController],
 })
 export class AppModule {}

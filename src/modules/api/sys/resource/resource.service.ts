@@ -1,13 +1,19 @@
 import { BaseService } from '@/common/base/base.service'
 import {
   EAccountType,
-  EResourcePermission,
+  EResourcePermissionLabel,
   EResourceType,
 } from '@/common/enums/sys.enum'
 import { ActionFailException } from '@/common/exceptions/action-fail.exception'
 import { ValExistDto } from '@/common/dto/val-exist.dto'
 import { Injectable } from '@nestjs/common'
-import { FindOptionsWhere, DataSource, In, Not } from 'typeorm'
+import {
+  FindOptionsWhere,
+  DataSource,
+  In,
+  Not,
+  FindOptionsOrder,
+} from 'typeorm'
 import { ResourceEntity } from '@/entities/sys/resource.entity'
 import { ResourceModel } from '@/models/sys/resource.model'
 import { AccountEntity } from '@/entities/sys/account.entity'
@@ -50,21 +56,17 @@ export class ResourceService extends BaseService<ResourceEntity> {
     return result
   }
 
-  async getResources({
-    accountId,
-    accountType,
-  }: {
-    accountId?: string
-    accountType?: EAccountType
-  }): Promise<ResourceEntity[]> {
+  async getResources(
+    accountId?: string,
+    accountType?: EAccountType,
+  ): Promise<ResourceEntity[]> {
     const where: FindOptionsWhere<ResourceEntity> = {}
+    const order: FindOptionsOrder<ResourceEntity> = { sort: 'ASC' }
     if (accountType) where.accountType = accountType
     if (!accountId) {
       return await this.find({
         where,
-        order: {
-          sort: 'ASC',
-        },
+        order,
       })
     }
     const account: AccountModel = await this.dataSource.manager
@@ -82,9 +84,7 @@ export class ResourceService extends BaseService<ResourceEntity> {
     if (account.identity.isSuperAdmin) {
       return await this.find({
         where,
-        order: {
-          sort: 'ASC',
-        },
+        order,
       })
     }
     const roleIds = (
@@ -109,29 +109,29 @@ export class ResourceService extends BaseService<ResourceEntity> {
         id: In(resourceIds),
         ...where,
       },
-      order: {
-        sort: 'ASC',
-      },
+      order,
     })
     return resources
   }
 
-  async getPermCodeList(accountId: string): Promise<string[]> {
-    const resources = await this.getResources({ accountId })
+  async getPermCodeList(
+    accountId: string,
+    accountType: EAccountType,
+  ): Promise<string[]> {
+    const resources = await this.getResources(accountId, accountType)
     return resources
       .filter((item) => item.type === EResourceType.BUTTON)
       .map((item) => item.permission)
   }
 
-  async getMenuTree(accountId: string): Promise<ResourceModel[]> {
-    const account = await this.dataSource.manager
-      .createQueryBuilder(AccountEntity, 'account')
-      .where({ id: accountId })
-      .getOne()
+  async getMenuTree(
+    accountId: string,
+    accountType: EAccountType,
+  ): Promise<ResourceModel[]> {
     const resources = this.generateTree(
-      (
-        await this.getResources({ accountId, accountType: account.accountType })
-      ).filter((item) => item.type !== EResourceType.BUTTON),
+      (await this.getResources(accountId, accountType)).filter(
+        (item) => item.type !== EResourceType.BUTTON,
+      ),
     )
     return resources
   }
@@ -144,7 +144,7 @@ export class ResourceService extends BaseService<ResourceEntity> {
     accountType?: EAccountType
   }): Promise<ResourceModel[]> {
     const resources = this.generateTree(
-      await this.getResources({ accountId, accountType }),
+      await this.getResources(accountId, accountType),
     )
     return resources
   }
@@ -209,15 +209,9 @@ export class ResourceService extends BaseService<ResourceEntity> {
     await this.insertTree(resource.id, resource.parentId)
 
     if (resource.type === EResourceType.MENU && resource.component) {
-      const permissionMap = {
-        [EResourcePermission.ADD]: '新增',
-        [EResourcePermission.EDIT]: '编辑',
-        [EResourcePermission.DEL]: '删除',
-        [EResourcePermission.VIEW]: '查看',
-      }
-      for (let key in EResourcePermission) {
+      for (let key in EResourcePermissionLabel) {
         await this.createOne({
-          title: permissionMap[EResourcePermission[key]] + resource.title,
+          title: EResourcePermissionLabel[key] + resource.title,
           type: EResourceType.BUTTON,
           name: resource.name + toCamelCase(lowerCase(key)),
           permission: resource.name + ':' + key,

@@ -7,7 +7,8 @@ export function setupRateLimiter() {
   return RateLimiterModule.registerAsync({
     inject: [ConfigService, RedisCacheService],
     useFactory: (config: ConfigService, redisCache: RedisCacheService) => {
-      const keyPrefix = config.get<AppConfig>('app').prefix + ':rate-limit'
+      const appCfg = config.get<AppConfig>('app')
+      const keyPrefix = appCfg.prefix + ':rate-limit'
       return {
         keyPrefix,
         type: 'Redis',

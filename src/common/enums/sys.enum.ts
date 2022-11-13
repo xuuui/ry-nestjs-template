@@ -64,11 +64,11 @@ export enum EResourceType {
 /**
  * @description: 资源权限
  */
-export enum EResourcePermission {
-  ADD = 'add',
-  VIEW = 'view',
-  EDIT = 'edit',
-  DEL = 'del',
+export enum EResourcePermissionLabel {
+  ADD = '新增',
+  VIEW = '查看',
+  EDIT = '编辑',
+  DEL = '删除',
 }
 
 /**

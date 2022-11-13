@@ -8,13 +8,13 @@ export function setupServeStatic() {
   return ServeStaticModule.forRootAsync({
     inject: [ConfigService],
     useFactory: (config: ConfigService) => {
-      const staticRoot = config.get<AppConfig>('app').staticRoot
-      const rootPath = join(staticRoot)
+      const appCfg = config.get<AppConfig>('app')
+      const rootPath = join(appCfg.staticRoot)
       ensureDirSync(rootPath)
       return [
         {
           rootPath,
-          serveRoot: `/${staticRoot}`,
+          serveRoot: `/${appCfg.staticRoot}`,
           serveStaticOptions: {
             index: false,
             maxAge: '1h',

@@ -10,10 +10,14 @@ import { Response } from 'express'
 import { HttpResponse, ExceptionOption } from '@/common/interfaces/http'
 import { Log4jLoggerService } from '@/modules/logger/log4j-logger.service'
 import { EntityNotFoundError } from 'typeorm'
+import { InjectLogger } from '@/modules/logger/logger.decorator'
 
 @Catch()
 export class AnyExceptionFilter implements ExceptionFilter {
-  constructor(private readonly logger: Log4jLoggerService) {}
+  constructor(
+    @InjectLogger(AnyExceptionFilter.name)
+    private readonly logger: Log4jLoggerService,
+  ) {}
 
   catch(exception: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp()

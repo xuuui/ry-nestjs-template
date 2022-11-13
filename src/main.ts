@@ -34,7 +34,7 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     bufferLogs: true,
   })
-  const logger = app.get(Log4jLoggerService)
+  const logger = new Log4jLoggerService(app.get(AppService))
   app.useLogger(logger)
 
   const config = app.get<ConfigService>(ConfigService)

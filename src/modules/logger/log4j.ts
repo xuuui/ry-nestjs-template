@@ -1,11 +1,8 @@
-import path from 'path'
 import log4js from 'log4js'
 import util from 'util'
 import dayjs from 'dayjs'
 import chalk from 'chalk'
-import StackTrace from 'stacktrace-js'
 import log4jConfig from './log4j.config'
-import { QueryRunner } from 'typeorm'
 
 // 定义日志级别
 export enum LoggerLevel {
@@ -42,7 +39,6 @@ const customLayout = (
     if (value instanceof ContextTrace) {
       moduleName = value.context
       // 显示触发日志的坐标（行，列）
-
       if (value.lineNumber && value.columnNumber) {
         position = `${value.lineNumber}, ${value.columnNumber}`
       }
@@ -66,15 +62,10 @@ const customLayout = (
     : ''
   let messageOutput: string = messageList.join('')
   const positionOutput: string = position ? ` [${position}]` : ''
-
   let dateOutput: string = `${dayjs(logEvent.startTime).format(
     'YYYY-MM-DD HH:mm:ss',
   )} [${logEvent.pid.toString()}] `
-
-  let moduleOutput: string = `[${
-    moduleName ? moduleName : logEvent.categoryName
-  }] `
-
+  let moduleOutput: string = `[Nest] `
   let levelOutput: string = `[${logEvent.level}] `
 
   if (color) {
@@ -113,13 +104,13 @@ const customLayout = (
   return `${moduleOutput}${dateOutput}${levelOutput}${contextOutput}${messageOutput}${positionOutput}`
 }
 
-log4js.addLayout('console', (logConfig: any) => {
+log4js.addLayout('console', () => {
   return (logEvent: log4js.LoggingEvent): string => {
     return customLayout(logEvent, true)
   }
 })
 
-log4js.addLayout('file', (logConfig: any) => {
+log4js.addLayout('file', () => {
   return (logEvent: log4js.LoggingEvent): string => {
     return customLayout(logEvent)
   }
@@ -128,97 +119,6 @@ log4js.addLayout('file', (logConfig: any) => {
 // 配置
 log4js.configure(log4jConfig)
 
-// 实例化
-export const logger = log4js.getLogger('default')
-logger.level = LoggerLevel.TRACE
-
-export class log4jLogger {
-  static trace(...args: any[]) {
-    logger.trace(log4jLogger.getStackTrace(), ...args)
-  }
-
-  static debug(...args: any[]) {
-    logger.debug(log4jLogger.getStackTrace(), ...args)
-  }
-
-  static log(...args: any[]) {
-    logger.info(log4jLogger.getStackTrace(), ...args)
-  }
-
-  static info(...args: any[]) {
-    logger.info(log4jLogger.getStackTrace(), ...args)
-  }
-
-  static warn(...args: any[]) {
-    logger.warn(log4jLogger.getStackTrace(), ...args)
-  }
-
-  static warning(...args: any[]) {
-    logger.warn(log4jLogger.getStackTrace(), ...args)
-  }
-
-  static error(...args: any[]) {
-    logger.error(log4jLogger.getStackTrace(), ...args)
-  }
-
-  static fatal(...args: any[]) {
-    logger.fatal(log4jLogger.getStackTrace(), ...args)
-  }
-
-  static getStackTrace(deep: number = 2): string {
-    const stackList: StackTrace.StackFrame[] = StackTrace.getSync()
-    const stackInfo: StackTrace.StackFrame = stackList[deep]
-    const lineNumber: number = stackInfo.lineNumber
-    const columnNumber: number = stackInfo.columnNumber
-    const fileName: string = stackInfo.fileName
-    const basename: string = path.basename(fileName)
-    return `${basename}(line: ${lineNumber}, column: ${columnNumber}): \n`
-  }
-}
-
-export const nestLogger = log4js.getLogger('Nest')
-
-export const typeOrmLogger = log4js.getLogger('TypeOrm')
-
-export class TypeOrmLogger implements log4jLogger {
-  logQuery(query: string, parameters?: any[], queryRunner?: QueryRunner) {
-    typeOrmLogger.info(query)
-  }
-
-  logQueryError(
-    error: string,
-    query: string,
-    parameters?: any[],
-    queryRunner?: QueryRunner,
-  ) {
-    typeOrmLogger.error(query, error)
-  }
-
-  logQuerySlow(
-    time: number,
-    query: string,
-    parameters?: any[],
-    queryRunner?: QueryRunner,
-  ) {
-    typeOrmLogger.info(query, time)
-  }
-
-  logSchemaBuild(message: string, queryRunner?: QueryRunner) {
-    typeOrmLogger.info(message)
-  }
-
-  logMigration(message: string, queryRunner?: QueryRunner) {
-    typeOrmLogger.info(message)
-  }
-  log(level: 'log' | 'info' | 'warn', message: any, queryRunner?: QueryRunner) {
-    switch (level) {
-      case 'info': {
-        typeOrmLogger.info(message)
-        break
-      }
-      case 'warn': {
-        typeOrmLogger.warn(message)
-      }
-    }
-  }
+export function getLogger(context: string): log4js.Logger {
+  return log4js.getLogger(context)
 }

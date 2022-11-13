@@ -38,7 +38,7 @@ const log4jsConfig: Configuration = {
       appenders: ['console', 'access', 'errors'],
       level: 'DEBUG',
     },
-    TypeOrm: { appenders: ['access', 'errors', 'console'], level: 'INFO' },
+    TypeOrm: { appenders: ['console', 'access', 'errors'], level: 'INFO' },
   },
 }
 

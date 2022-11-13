@@ -4,7 +4,6 @@ import { DATE_TEMPLATE } from '@/common/constants/sys'
 import { EOpertateType } from '@/common/enums/sys.enum'
 import { AuthInfo, OperateLogOptions } from '@/common/interfaces/sys'
 import { OperateLogEntity } from '@/entities/sys/operate-log.entity'
-import { Log4jLoggerService } from '@/modules/logger/log4j-logger.service'
 import { Injectable } from '@nestjs/common'
 import axios from 'axios'
 import dayjs from 'dayjs'
@@ -15,13 +14,16 @@ import {
   Transaction,
   useTransaction,
 } from '@ry-nestjs/typeorm-transactional-next'
+import { Log4jLoggerService } from '@/modules/logger/log4j-logger.service'
+import { InjectLogger } from '@/modules/logger/logger.decorator'
 
 @Injectable()
 export class OperateLogService extends BaseService<OperateLogEntity> {
   constructor(
+    @InjectLogger(OperateLogService.name)
+    private readonly logger: Log4jLoggerService,
     protected readonly dataSource: DataSource,
     private readonly app: AppService,
-    private readonly log4j: Log4jLoggerService,
   ) {
     super(OperateLogEntity, dataSource)
   }
@@ -52,10 +54,7 @@ export class OperateLogService extends BaseService<OperateLogEntity> {
         accountType: authInfo.accountType,
       })
     } catch (error) {
-      this.log4j.error(
-        { ...this.log4j.getHttpLogInfo(), error },
-        this.constructor.name,
-      )
+      this.logger.error({ ...this.logger.getHttpLogInfo(), error })
     }
   }
 
