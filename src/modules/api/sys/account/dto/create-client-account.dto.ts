@@ -1,6 +1,6 @@
-import { MobileValidator } from '@/common/decorators/class-validator/mobile.decorator'
-import { NestedValidator } from '@/common/decorators/class-validator/nested.decorator'
-import { StringValidator } from '@/common/decorators/class-validator/string.decorator'
+import { MobileValidator } from '@/core/decorators/class-validator/mobile.decorator'
+import { NestedValidator } from '@/core/decorators/class-validator/nested.decorator'
+import { StringValidator } from '@/core/decorators/class-validator/string.decorator'
 import { OmitType } from '@nestjs/swagger'
 import { CreateUserDto } from '../../user/dto/create-user.dto'
 

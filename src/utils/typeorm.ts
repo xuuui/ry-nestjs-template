@@ -1,4 +1,4 @@
-import { DATE_TEMPLATE } from '@/common/constants/sys'
+import { DATE_TEMPLATE } from '@/core/constants/sys'
 import dayjs from 'dayjs'
 import glob from 'glob'
 import { normalize, parse } from 'path'

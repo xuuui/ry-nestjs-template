@@ -1,4 +1,4 @@
-import { ROUTE_METEDATA } from '@/common/constants/decorator'
+import { ROUTE_METEDATA } from '@/core/constants/decorator'
 import { getLogger } from '@/modules/logger/log4j'
 import { Type } from '@nestjs/common'
 

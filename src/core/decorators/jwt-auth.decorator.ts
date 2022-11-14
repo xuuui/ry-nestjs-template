@@ -1,5 +1,5 @@
 import { applyDecorators, SetMetadata } from '@nestjs/common'
-import { JWT_AUTH } from '@/common/constants/decorator'
+import { JWT_AUTH } from '@/core/constants/decorator'
 import { ApiBearerAuth } from '@nestjs/swagger'
 
 /**

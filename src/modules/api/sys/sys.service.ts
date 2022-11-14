@@ -1,4 +1,4 @@
-import { Captcha } from '@/common/interfaces/sys'
+import { Captcha } from '@/core/interfaces/sys'
 import { Injectable } from '@nestjs/common'
 import svgCaptcha from 'svg-captcha'
 

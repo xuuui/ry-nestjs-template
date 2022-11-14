@@ -1,11 +1,11 @@
-import { BaseService } from '@/common/base/base.service'
+import { BaseService } from '@/core/base/base.service'
 import {
   EAccountType,
   EResourcePermissionLabel,
   EResourceType,
-} from '@/common/enums/sys.enum'
-import { ActionFailException } from '@/common/exceptions/action-fail.exception'
-import { ValExistDto } from '@/common/dto/val-exist.dto'
+} from '@/core/enums/sys.enum'
+import { ActionFailException } from '@/core/exceptions/action-fail.exception'
+import { ValExistDto } from '@/core/dto/val-exist.dto'
 import { Injectable } from '@nestjs/common'
 import {
   FindOptionsWhere,

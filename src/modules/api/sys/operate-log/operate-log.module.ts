@@ -1,4 +1,4 @@
-import { Route } from '@/common/decorators/route.decorator'
+import { Route } from '@/core/decorators/route.decorator'
 import { Module } from '@nestjs/common'
 import { OperateLogController } from './operate-log.controller'
 import { OperateLogService } from './operate-log.service'

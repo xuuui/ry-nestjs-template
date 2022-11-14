@@ -1,4 +1,4 @@
-import { DATE_TEMPLATE } from '@/common/constants/sys'
+import { DATE_TEMPLATE } from '@/core/constants/sys'
 import { isDate, isDateString } from 'class-validator'
 import dayjs from 'dayjs'
 import { customAlphabet } from 'nanoid'

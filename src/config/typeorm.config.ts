@@ -1,6 +1,6 @@
 import { registerAs } from '@nestjs/config'
 import { join } from 'path'
-import type { TypeormConfig } from '../common/interfaces/config'
+import type { TypeormConfig } from '../core/interfaces/config'
 import { mergeEnvConfig, strToBool } from './util'
 
 const config: TypeormConfig = {

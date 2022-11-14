@@ -1,5 +1,5 @@
-import { NestedValidator } from '@/common/decorators/class-validator/nested.decorator'
-import { NumberValidator } from '@/common/decorators/class-validator/number.decorator'
+import { NestedValidator } from '@/core/decorators/class-validator/nested.decorator'
+import { NumberValidator } from '@/core/decorators/class-validator/number.decorator'
 import { AccountEntity } from '@/entities/sys/account.entity'
 import { AccountIdentityModel } from './account-identity.model'
 import { RoleModel } from './role.model'

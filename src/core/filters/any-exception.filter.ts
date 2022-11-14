@@ -5,9 +5,9 @@ import {
   HttpException,
 } from '@nestjs/common'
 import { isString } from 'lodash'
-import { EHttpStatus } from '@/common/enums/sys.enum'
+import { EHttpStatus } from '@/core/enums/sys.enum'
 import { Response } from 'express'
-import { HttpResponse, ExceptionOption } from '@/common/interfaces/http'
+import { HttpResponse, ExceptionOption } from '@/core/interfaces/http'
 import { Log4jLoggerService } from '@/modules/logger/log4j-logger.service'
 import { EntityNotFoundError } from 'typeorm'
 import { InjectLogger } from '@/modules/logger/logger.decorator'

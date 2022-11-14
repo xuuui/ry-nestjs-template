@@ -1,4 +1,4 @@
-import { TypeormConfig } from '@/common/interfaces/config'
+import { TypeormConfig } from '@/core/interfaces/config'
 import { TypeOrmLogger } from '@/modules/logger/typeorm-logger'
 import { ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'

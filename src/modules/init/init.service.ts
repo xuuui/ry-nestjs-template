@@ -3,7 +3,7 @@ import {
   EDictType,
   EResourceType,
   ESysDictCode,
-} from '@/common/enums/sys.enum'
+} from '@/core/enums/sys.enum'
 import appConfig from '@/config/app.config'
 import { DictModel } from '@/models/sys/dict.model'
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common'

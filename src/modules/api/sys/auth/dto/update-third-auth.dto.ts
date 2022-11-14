@@ -1,6 +1,6 @@
-import { MobileValidator } from '@/common/decorators/class-validator/mobile.decorator'
-import { StringValidator } from '@/common/decorators/class-validator/string.decorator'
-import { UpdateDto } from '@/common/dto/update.dto'
+import { MobileValidator } from '@/core/decorators/class-validator/mobile.decorator'
+import { StringValidator } from '@/core/decorators/class-validator/string.decorator'
+import { UpdateDto } from '@/core/dto/update.dto'
 
 export class UpdateThirdAuthDto extends UpdateDto {
   @StringValidator({

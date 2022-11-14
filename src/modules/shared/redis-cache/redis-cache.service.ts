@@ -1,4 +1,4 @@
-import { EAccountType, EThirdPlatform } from '@/common/enums/sys.enum'
+import { EAccountType, EThirdPlatform } from '@/core/enums/sys.enum'
 import appConfig from '@/config/app.config'
 import { InjectRedis } from '@liaoliaots/nestjs-redis'
 import { Inject, Injectable } from '@nestjs/common'

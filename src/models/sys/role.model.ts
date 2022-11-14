@@ -1,4 +1,4 @@
-import { NestedValidator } from '@/common/decorators/class-validator/nested.decorator'
+import { NestedValidator } from '@/core/decorators/class-validator/nested.decorator'
 import { RoleEntity } from '@/entities/sys/role.entity'
 import { ResourceModel } from './resource.model'
 

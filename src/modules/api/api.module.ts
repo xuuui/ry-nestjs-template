@@ -1,4 +1,4 @@
-import { Route } from '@/common/decorators/route.decorator'
+import { Route } from '@/core/decorators/route.decorator'
 import { Module } from '@nestjs/common'
 import { CommonModule } from './common/common.module'
 import { SysModule } from './sys/sys.module'

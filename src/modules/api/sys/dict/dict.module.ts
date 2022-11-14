@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common'
 import { DictService } from './dict.service'
 import { DictController } from './dict.controller'
-import { Route } from '@/common/decorators/route.decorator'
+import { Route } from '@/core/decorators/route.decorator'
 
 const services = [DictService]
 

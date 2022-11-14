@@ -1,5 +1,5 @@
 import { registerAs } from '@nestjs/config'
-import type { RedisConfig } from '../common/interfaces/config'
+import type { RedisConfig } from '../core/interfaces/config'
 import { getRedisUrl, mergeEnvConfig } from './util'
 
 const config: RedisConfig = {

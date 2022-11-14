@@ -1,4 +1,4 @@
-import { JwtAuth } from '@/common/decorators/jwt-auth.decorator'
+import { JwtAuth } from '@/core/decorators/jwt-auth.decorator'
 import { Controller } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
 import { UserService } from './user.service'

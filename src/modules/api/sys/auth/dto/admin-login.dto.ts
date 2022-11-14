@@ -1,6 +1,6 @@
-import { EnumValidator } from '@/common/decorators/class-validator/enum.decorator'
-import { StringValidator } from '@/common/decorators/class-validator/string.decorator'
-import { EAccountType } from '@/common/enums/sys.enum'
+import { EnumValidator } from '@/core/decorators/class-validator/enum.decorator'
+import { StringValidator } from '@/core/decorators/class-validator/string.decorator'
+import { EAccountType } from '@/core/enums/sys.enum'
 
 export enum EAdminAccountType {
   MANAGE = EAccountType.MANAGE,

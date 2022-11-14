@@ -1,5 +1,5 @@
 import { registerAs } from '@nestjs/config'
-import type { WxConfig } from '../common/interfaces/config'
+import type { WxConfig } from '../core/interfaces/config'
 import { mergeEnvConfig } from './util'
 
 const config: WxConfig = {

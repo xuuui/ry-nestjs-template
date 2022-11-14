@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common'
 import { UploadController } from './upload.controller'
 import { UploadService } from './upload.service'
-import { Route } from '@/common/decorators/route.decorator'
+import { Route } from '@/core/decorators/route.decorator'
 import { QiniuService } from './qiniu.service'
 
 const services = [UploadService, QiniuService]

@@ -1,11 +1,11 @@
-import { NoResTransform } from '@/common/decorators/res-transform.decorator'
+import { NoResTransform } from '@/core/decorators/res-transform.decorator'
 import { RedisCacheService } from '@/modules/shared/redis-cache/redis-cache.service'
 import { Controller, Get, Query, Res, UseGuards } from '@nestjs/common'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { SysService } from './sys.service'
 import { Response } from 'express'
 import { RateLimit } from 'nestjs-rate-limiter'
-import { ReqLimitGuard } from '@/common/guards/req-limit.guard'
+import { ReqLimitGuard } from '@/core/guards/req-limit.guard'
 
 @ApiTags('系统模块')
 @Controller()

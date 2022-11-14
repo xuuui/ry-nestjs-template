@@ -1,4 +1,4 @@
-import { AuthInfo } from '@/common/interfaces/sys'
+import { AuthInfo } from '@/core/interfaces/sys'
 import jwtConfig from '@/config/jwt.config'
 import { Inject, Injectable } from '@nestjs/common'
 import { ConfigType } from '@nestjs/config'

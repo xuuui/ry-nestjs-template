@@ -1,4 +1,4 @@
-import { AppConfig } from '@/common/interfaces/config'
+import { AppConfig } from '@/core/interfaces/config'
 import { ConfigService } from '@nestjs/config'
 import { ServeStaticModule } from '@nestjs/serve-static'
 import { ensureDirSync } from 'fs-extra'

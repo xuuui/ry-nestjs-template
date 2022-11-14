@@ -1,6 +1,6 @@
 import { RoleController } from './role.controller'
 import { Module } from '@nestjs/common'
-import { Route } from '@/common/decorators/route.decorator'
+import { Route } from '@/core/decorators/route.decorator'
 import { RoleService } from './role.service'
 
 const services = [RoleService]

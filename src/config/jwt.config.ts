@@ -1,5 +1,5 @@
 import { registerAs } from '@nestjs/config'
-import { JwtConfig } from '../common/interfaces/config'
+import { JwtConfig } from '../core/interfaces/config'
 import { mergeEnvConfig } from './util'
 
 const config: JwtConfig = {

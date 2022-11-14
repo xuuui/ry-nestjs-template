@@ -1,6 +1,6 @@
 import { QueryRunner } from 'typeorm'
 import log4js from 'log4js'
-import { TypeormConfig } from '@/common/interfaces/config'
+import { TypeormConfig } from '@/core/interfaces/config'
 
 export class TypeOrmLogger {
   private readonly logger: log4js.Logger

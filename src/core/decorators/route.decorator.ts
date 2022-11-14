@@ -1,5 +1,5 @@
 import { SetMetadata } from '@nestjs/common'
-import { ROUTE_METEDATA } from '@/common/constants/decorator'
+import { ROUTE_METEDATA } from '@/core/constants/decorator'
 import { RouteMetadata } from '../interfaces/sys'
 
 /**

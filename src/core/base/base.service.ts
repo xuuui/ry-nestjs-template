@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { DataSource, EntityTarget, Repository } from 'typeorm'
-import { PaginationDto } from '@/common/dto/pagination.dto'
+import { PaginationDto } from '@/core/dto/pagination.dto'
 import { BaseEntity } from './base.entity'
 import { ParsedQueryParams, QueryBuilder } from '@ry-nestjs/typeorm-query'
 

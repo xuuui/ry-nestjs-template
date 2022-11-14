@@ -1,9 +1,9 @@
-import { EDictType } from '@/common/enums/sys.enum'
-import { SysDto } from '@/common/dto/sys.dto'
+import { EDictType } from '@/core/enums/sys.enum'
+import { SysDto } from '@/core/dto/sys.dto'
 import { IsOptional, IsString, ValidateIf } from 'class-validator'
 import { Expose } from 'class-transformer'
-import { StringValidator } from '@/common/decorators/class-validator/string.decorator'
-import { EnumValidator } from '@/common/decorators/class-validator/enum.decorator'
+import { StringValidator } from '@/core/decorators/class-validator/string.decorator'
+import { EnumValidator } from '@/core/decorators/class-validator/enum.decorator'
 
 export class CreateDictDto extends SysDto {
   @StringValidator({

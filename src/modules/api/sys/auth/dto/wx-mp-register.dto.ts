@@ -1,5 +1,5 @@
-import { MobileValidator } from '@/common/decorators/class-validator/mobile.decorator'
-import { StringValidator } from '@/common/decorators/class-validator/string.decorator'
+import { MobileValidator } from '@/core/decorators/class-validator/mobile.decorator'
+import { StringValidator } from '@/core/decorators/class-validator/string.decorator'
 
 export class WxMpRegisterDto {
   @StringValidator()

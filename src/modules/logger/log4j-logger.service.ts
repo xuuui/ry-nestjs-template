@@ -1,6 +1,6 @@
 import { AppService } from '@/app/app.service'
-import { HTTP_HEADER_TOKEN } from '@/common/constants/sys'
-import { HttpLogInfo } from '@/common/interfaces/sys'
+import { HTTP_HEADER_TOKEN } from '@/core/constants/sys'
+import { HttpLogInfo } from '@/core/interfaces/sys'
 import { Injectable, LoggerService, Scope } from '@nestjs/common'
 import log4js from 'log4js'
 import { getLogger } from './log4j'

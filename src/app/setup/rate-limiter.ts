@@ -1,4 +1,4 @@
-import { AppConfig } from '@/common/interfaces/config'
+import { AppConfig } from '@/core/interfaces/config'
 import { RedisCacheService } from '@/modules/shared/redis-cache/redis-cache.service'
 import { ConfigService } from '@nestjs/config'
 import { RateLimiterModule } from 'nestjs-rate-limiter'

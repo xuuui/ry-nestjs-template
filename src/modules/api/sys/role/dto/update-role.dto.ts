@@ -1,6 +1,6 @@
-import { StringValidator } from '@/common/decorators/class-validator/string.decorator'
-import { SysDto } from '@/common/dto/sys.dto'
-import { UpdateDto } from '@/common/dto/update.dto'
+import { StringValidator } from '@/core/decorators/class-validator/string.decorator'
+import { SysDto } from '@/core/dto/sys.dto'
+import { UpdateDto } from '@/core/dto/update.dto'
 import { IntersectionType } from '@nestjs/swagger'
 
 export class UpdateRoleDto extends IntersectionType(UpdateDto, SysDto) {

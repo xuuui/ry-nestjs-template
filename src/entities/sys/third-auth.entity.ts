@@ -1,9 +1,9 @@
-import { BaseEntity } from '@/common/base/base.entity'
-import { EnumValidator } from '@/common/decorators/class-validator/enum.decorator'
-import { StringValidator } from '@/common/decorators/class-validator/string.decorator'
-import { CharColumn } from '@/common/decorators/typeorm/char.decorator'
-import { EnumColumn } from '@/common/decorators/typeorm/enum.decorator'
-import { EThirdPlatform } from '@/common/enums/sys.enum'
+import { BaseEntity } from '@/core/base/base.entity'
+import { EnumValidator } from '@/core/decorators/class-validator/enum.decorator'
+import { StringValidator } from '@/core/decorators/class-validator/string.decorator'
+import { CharColumn } from '@/core/decorators/typeorm/char.decorator'
+import { EnumColumn } from '@/core/decorators/typeorm/enum.decorator'
+import { EThirdPlatform } from '@/core/enums/sys.enum'
 import { Entity, Index } from 'typeorm'
 
 @Entity({ name: 'sys_third_auth' })

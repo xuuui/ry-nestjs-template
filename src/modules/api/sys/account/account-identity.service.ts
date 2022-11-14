@@ -1,4 +1,4 @@
-import { BaseService } from '@/common/base/base.service'
+import { BaseService } from '@/core/base/base.service'
 import { AccountIdentityEntity } from '@/entities/sys/account-identity.entity'
 import { Injectable } from '@nestjs/common'
 import { DataSource } from 'typeorm'

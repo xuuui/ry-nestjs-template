@@ -1,4 +1,4 @@
-import { BaseService } from '@/common/base/base.service'
+import { BaseService } from '@/core/base/base.service'
 import { Injectable } from '@nestjs/common'
 import { DataSource } from 'typeorm'
 import {

@@ -1,5 +1,5 @@
-import { BaseService } from '@/common/base/base.service'
-import { PaginationDto } from '@/common/dto/pagination.dto'
+import { BaseService } from '@/core/base/base.service'
+import { PaginationDto } from '@/core/dto/pagination.dto'
 import { ResourceEntity } from '@/entities/sys/resource.entity'
 import { RoleResourceEntity } from '@/entities/sys/role-resource.entity'
 import { AccountRoleEntity } from '@/entities/sys/account-role.entity'

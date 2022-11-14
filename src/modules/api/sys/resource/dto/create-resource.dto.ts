@@ -1,8 +1,8 @@
-import { EAccountType, EResourceType } from '@/common/enums/sys.enum'
-import { SysDto } from '@/common/dto/sys.dto'
-import { StringValidator } from '@/common/decorators/class-validator/string.decorator'
-import { EnumValidator } from '@/common/decorators/class-validator/enum.decorator'
-import { NumberValidator } from '@/common/decorators/class-validator/number.decorator'
+import { EAccountType, EResourceType } from '@/core/enums/sys.enum'
+import { SysDto } from '@/core/dto/sys.dto'
+import { StringValidator } from '@/core/decorators/class-validator/string.decorator'
+import { EnumValidator } from '@/core/decorators/class-validator/enum.decorator'
+import { NumberValidator } from '@/core/decorators/class-validator/number.decorator'
 
 export class CreateResourceDto extends SysDto {
   @StringValidator({

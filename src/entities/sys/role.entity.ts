@@ -1,13 +1,13 @@
-import { BaseEntity } from 'src/common/base/base.entity'
-import { EAccountType } from 'src/common/enums/sys.enum'
+import { BaseEntity } from '@/core/base/base.entity'
+import { EAccountType } from '@/core/enums/sys.enum'
 import { Entity, Index } from 'typeorm'
-import { StringValidator } from '@/common/decorators/class-validator/string.decorator'
-import { EnumValidator } from '@/common/decorators/class-validator/enum.decorator'
-import { NumberValidator } from '@/common/decorators/class-validator/number.decorator'
-import { ForeignKeyColumn } from '@/common/decorators/typeorm/foreign-key.decorator'
-import { CharColumn } from '@/common/decorators/typeorm/char.decorator'
-import { EnumColumn } from '@/common/decorators/typeorm/enum.decorator'
-import { TinyintColumn } from '@/common/decorators/typeorm/tinyint.decorator'
+import { StringValidator } from '@/core/decorators/class-validator/string.decorator'
+import { EnumValidator } from '@/core/decorators/class-validator/enum.decorator'
+import { NumberValidator } from '@/core/decorators/class-validator/number.decorator'
+import { ForeignKeyColumn } from '@/core/decorators/typeorm/foreign-key.decorator'
+import { CharColumn } from '@/core/decorators/typeorm/char.decorator'
+import { EnumColumn } from '@/core/decorators/typeorm/enum.decorator'
+import { TinyintColumn } from '@/core/decorators/typeorm/tinyint.decorator'
 
 @Entity({ name: 'sys_role' })
 export class RoleEntity extends BaseEntity {

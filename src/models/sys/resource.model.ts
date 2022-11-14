@@ -1,4 +1,4 @@
-import { NestedValidator } from '@/common/decorators/class-validator/nested.decorator'
+import { NestedValidator } from '@/core/decorators/class-validator/nested.decorator'
 import { ResourceEntity } from '@/entities/sys/resource.entity'
 
 export class ResourceModel extends ResourceEntity {

@@ -1,12 +1,12 @@
-import { BaseService } from '@/common/base/base.service'
-import { EDictType } from '@/common/enums/sys.enum'
-import { ActionFailException } from '@/common/exceptions/action-fail.exception'
+import { BaseService } from '@/core/base/base.service'
+import { EDictType } from '@/core/enums/sys.enum'
+import { ActionFailException } from '@/core/exceptions/action-fail.exception'
 import { Injectable } from '@nestjs/common'
 import { FindOptionsWhere, DataSource, In, Not } from 'typeorm'
 import { CreateDictDto } from './dto/create-dict.dto'
 import { UpdateDictDto } from './dto/update-dict.dto'
 import { DictEntity } from '@/entities/sys/dict.entity'
-import { ValExistDto } from '@/common/dto/val-exist.dto'
+import { ValExistDto } from '@/core/dto/val-exist.dto'
 import { DictModel } from '@/models/sys/dict.model'
 import {
   Transaction,

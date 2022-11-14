@@ -8,10 +8,10 @@ import { ConfigType } from '@nestjs/config'
 import { AccountIdentityService } from '../account/account-identity.service'
 import { UserService } from '../user/user.service'
 import ms from 'ms'
-import { ActionFailException } from '@/common/exceptions/action-fail.exception'
+import { ActionFailException } from '@/core/exceptions/action-fail.exception'
 import { ThirdAuthService } from './third-atuh.service'
-import { EThirdPlatform } from '@/common/enums/sys.enum'
-import { AuthInfo } from '@/common/interfaces/sys'
+import { EThirdPlatform } from '@/core/enums/sys.enum'
+import { AuthInfo } from '@/core/interfaces/sys'
 
 @Injectable()
 export class AuthService {

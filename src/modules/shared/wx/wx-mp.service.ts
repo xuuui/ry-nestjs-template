@@ -13,7 +13,7 @@ import {
 import { readFileSync } from 'fs-extra'
 import appConfig from '@/config/app.config'
 import wxConfig from '@/config/wx.config'
-import { EThirdPlatform } from '@/common/enums/sys.enum'
+import { EThirdPlatform } from '@/core/enums/sys.enum'
 import { join } from 'path'
 import { AppService } from '@/app/app.service'
 

@@ -1,5 +1,5 @@
 import { applyDecorators, SetMetadata } from '@nestjs/common'
-import { OPERATE_LOG, OPERATE_OPTIONS } from '@/common/constants/decorator'
+import { OPERATE_LOG, OPERATE_OPTIONS } from '@/core/constants/decorator'
 import { OperateLogOptions } from '../interfaces/sys'
 
 /**

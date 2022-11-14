@@ -1,7 +1,7 @@
-import { EnumValidator } from '@/common/decorators/class-validator/enum.decorator'
-import { StringValidator } from '@/common/decorators/class-validator/string.decorator'
-import { SysDto } from '@/common/dto/sys.dto'
-import { EAccountType } from '@/common/enums/sys.enum'
+import { EnumValidator } from '@/core/decorators/class-validator/enum.decorator'
+import { StringValidator } from '@/core/decorators/class-validator/string.decorator'
+import { SysDto } from '@/core/dto/sys.dto'
+import { EAccountType } from '@/core/enums/sys.enum'
 
 export class CreateRoleDto extends SysDto {
   @StringValidator({

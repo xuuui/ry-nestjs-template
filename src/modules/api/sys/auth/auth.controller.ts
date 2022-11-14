@@ -1,4 +1,4 @@
-import { ActionFailException } from '@/common/exceptions/action-fail.exception'
+import { ActionFailException } from '@/core/exceptions/action-fail.exception'
 import {
   Body,
   Controller,
@@ -10,19 +10,19 @@ import {
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { AccountService } from '../account/account.service'
 import { AdminLoginDto } from './dto/admin-login.dto'
-import { OperateLog } from '@/common/decorators/operate-log.decorator'
+import { OperateLog } from '@/core/decorators/operate-log.decorator'
 import {
   EAccountType,
   EOpertateType,
   EThirdPlatform,
-} from '@/common/enums/sys.enum'
+} from '@/core/enums/sys.enum'
 import { WxMpService } from '@/modules/shared/wx/wx-mp.service'
 import { ThirdAuthService } from './third-atuh.service'
 import { AuthService } from './auth.service'
 import { WxMpRegisterDto } from './dto/wx-mp-register.dto'
 import { comparePassword } from '@/utils/func'
 import { AppService } from '@/app/app.service'
-import { JwtAuth } from '@/common/decorators/jwt-auth.decorator'
+import { JwtAuth } from '@/core/decorators/jwt-auth.decorator'
 
 @ApiTags('验证模块')
 @Controller()
