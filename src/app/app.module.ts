@@ -63,13 +63,7 @@ import { setupCls } from './setup/cls'
     },
     AppService,
   ],
-  exports: [
-    AppService,
-    LoggerModule,
-    EntitiesModule,
-    SharedModule,
-    RateLimiterModule,
-  ],
+  exports: [AppService, RateLimiterModule],
   controllers: [AppController],
 })
 export class AppModule {}

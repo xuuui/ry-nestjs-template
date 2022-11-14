@@ -4,30 +4,32 @@ import { EnumValidator } from '@/common/decorators/class-validator/enum.decorato
 import { NestedValidator } from '@/common/decorators/class-validator/nested.decorator'
 import { NumberValidator } from '@/common/decorators/class-validator/number.decorator'
 import { StringValidator } from '@/common/decorators/class-validator/string.decorator'
-import { JsonColumn } from '@/common/decorators/typeorm/JsonColumn.decorator'
+import { CharColumn } from '@/common/decorators/typeorm/char.decorator'
+import { DatetimeColumn } from '@/common/decorators/typeorm/datetime.decorator'
+import { EnumColumn } from '@/common/decorators/typeorm/enum.decorator'
+import { ForeignKeyColumn } from '@/common/decorators/typeorm/foreign-key.decorator'
+import { JsonColumn } from '@/common/decorators/typeorm/json.decorator'
+import { LongtextColumn } from '@/common/decorators/typeorm/longtext.decorator'
+import { TinyintColumn } from '@/common/decorators/typeorm/tinyint.decorator'
 import { EAccountType, EOpertateType } from '@/common/enums/sys.enum'
-import { datetimeTransformer } from '@/utils/typeorm'
-import { Column, Entity, Index } from 'typeorm'
+import { Entity, Index } from 'typeorm'
 
 @Entity({ name: 'sys_opertate_log' })
 export class OperateLogEntity extends BaseEntity {
-  @Column({
-    type: 'enum',
-    enum: EOpertateType,
+  @EnumColumn(EOpertateType, {
     comment: '操作类型',
   })
   @EnumValidator(EOpertateType)
   operateType: EOpertateType
 
-  @Index()
-  @Column({
+  @ForeignKeyColumn({
     comment: '操作账户id',
   })
   @StringValidator()
   operateId: string
 
   @Index()
-  @Column({
+  @CharColumn({
     length: 64,
     comment: '操作账户用户名',
   })
@@ -36,13 +38,13 @@ export class OperateLogEntity extends BaseEntity {
   })
   operateUsername: string
 
-  @Column({
-    comment: '操作ip',
+  @CharColumn({
+    comment: 'ip',
   })
   @StringValidator()
   operateIp: string
 
-  @Column({
+  @CharColumn({
     comment: '操作ip地址',
   })
   @StringValidator()
@@ -60,41 +62,38 @@ export class OperateLogEntity extends BaseEntity {
   @NestedValidator(Object)
   reqBody: object
 
-  @Column({
+  @CharColumn({
     comment: '接口路径',
   })
   @StringValidator()
   apiPath: string
 
-  @Column('datetime', {
+  @DatetimeColumn({
     comment: '操作时间',
-    transformer: datetimeTransformer(),
   })
   @DateStringValidator()
   operateTime: string
 
-  @Column({
+  @CharColumn({
     comment: '操作描述',
   })
   @StringValidator()
   operateDesc: string
 
-  @Column('tinyint', {
+  @TinyintColumn({
     default: 1,
     comment: '操作结果 1成功 0失败',
   })
   @NumberValidator()
   state: number
 
-  @Column('longtext', {
+  @LongtextColumn({
     comment: '异常信息',
   })
   @StringValidator()
   errMsg: string
 
-  @Column({
-    type: 'enum',
-    enum: EAccountType,
+  @EnumColumn(EAccountType, {
     comment: '账户类型',
   })
   @EnumValidator(EAccountType)

@@ -3,29 +3,29 @@ import { BIRTH_DATE_TEMPLATE } from '@/common/constants/sys'
 import { DateStringValidator } from '@/common/decorators/class-validator/date-string.decorator'
 import { NumberValidator } from '@/common/decorators/class-validator/number.decorator'
 import { StringValidator } from '@/common/decorators/class-validator/string.decorator'
-import { datetimeTransformer } from '@/utils/typeorm'
-import { Column, Entity, Index } from 'typeorm'
+import { CharColumn } from '@/common/decorators/typeorm/char.decorator'
+import { DatetimeColumn } from '@/common/decorators/typeorm/datetime.decorator'
+import { ForeignKeyColumn } from '@/common/decorators/typeorm/foreign-key.decorator'
+import { IntColumn } from '@/common/decorators/typeorm/int.decorator'
+import { TinyintColumn } from '@/common/decorators/typeorm/tinyint.decorator'
+import { Entity, Index } from 'typeorm'
 
 @Entity({ name: 'sys_user' })
 export class UserEntity extends BaseEntity {
-  @Index()
-  @Column({
-    nullable: true,
+  @ForeignKeyColumn({
     comment: '账户id',
   })
   @StringValidator()
   accountId: string
 
   @Index()
-  @Column({
-    default: '',
+  @CharColumn({
     comment: '昵称',
   })
   @StringValidator()
   nickname: string
 
-  @Column({
-    default: '',
+  @CharColumn({
     comment: '头像',
     length: 2080,
   })
@@ -34,16 +34,14 @@ export class UserEntity extends BaseEntity {
   })
   avatar: string
 
-  @Column('tinyint', {
-    default: 0,
+  @TinyintColumn({
     comment: '0未知 男1 女2',
   })
   @NumberValidator()
   sex: number
 
   @Index()
-  @Column({
-    default: '',
+  @CharColumn({
     length: 128,
     comment: '真实姓名',
   })
@@ -52,25 +50,22 @@ export class UserEntity extends BaseEntity {
   })
   realname: string
 
-  @Column('datetime', {
-    nullable: true,
+  @DatetimeColumn({
+    format: BIRTH_DATE_TEMPLATE,
     comment: '出生日期',
-    transformer: datetimeTransformer(BIRTH_DATE_TEMPLATE),
   })
   @DateStringValidator({
     format: BIRTH_DATE_TEMPLATE,
   })
   birthDate: string
 
-  @Column({
-    nullable: true,
+  @IntColumn({
     comment: '年龄',
   })
   @NumberValidator()
   age: number
 
-  @Column({
-    default: '',
+  @CharColumn({
     comment: '简介',
   })
   @StringValidator()

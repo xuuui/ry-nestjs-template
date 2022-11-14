@@ -1,5 +1,6 @@
 import { Expose } from 'class-transformer'
 import { Pagination } from '@ry-nestjs/typeorm-query'
+import { NumberValidator } from '../decorators/class-validator/number.decorator'
 
 export class PaginationDto<T> implements Pagination<T> {
   /**
@@ -10,26 +11,26 @@ export class PaginationDto<T> implements Pagination<T> {
   /**
    * @description: 总数量
    */
-  @Expose()
+  @NumberValidator()
   total: number
   /**
    * @description: 总页数
    */
-  @Expose()
+  @NumberValidator()
   pageCount: number
   /**
    * @description: 当前数量
    */
-  @Expose()
+  @NumberValidator()
   count: number
   /**
    * @description: 当前分页
    */
-  @Expose()
+  @NumberValidator()
   limit: number
   /**
    * @description: 当前页数
    */
-  @Expose()
+  @NumberValidator()
   page: number
 }

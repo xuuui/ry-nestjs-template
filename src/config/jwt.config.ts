@@ -1,6 +1,6 @@
 import { registerAs } from '@nestjs/config'
-import { JwtConfig } from './types'
-import { mergeEnvConfig } from './utils'
+import { JwtConfig } from '../common/interfaces/config'
+import { mergeEnvConfig } from './util'
 
 const config: JwtConfig = {
   secret: '',

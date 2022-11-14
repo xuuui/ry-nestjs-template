@@ -92,6 +92,11 @@ export function toClassFromExist<T, V>(
   )
 }
 
+/**
+ * @description: 将字符串转为驼峰
+ * @param {string} str
+ * @return {*}
+ */
 export function toCamelCase(str: string) {
   return upperCaseFirst(camelCase(str))
 }

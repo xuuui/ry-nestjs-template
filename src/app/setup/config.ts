@@ -2,7 +2,7 @@ import appConfig from '@/config/app.config'
 import jwtConfig from '@/config/jwt.config'
 import redisConfig from '@/config/redis.config'
 import typeormConfig from '@/config/typeorm.config'
-import { getEnvConfigFile } from '@/config/utils'
+import { getEnvConfigFile } from '@/config/util'
 import wxConfig from '@/config/wx.config'
 import { ConfigModule } from '@nestjs/config'
 

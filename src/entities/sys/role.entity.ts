@@ -1,21 +1,24 @@
 import { BaseEntity } from 'src/common/base/base.entity'
 import { EAccountType } from 'src/common/enums/sys.enum'
-import { Column, Entity, Index } from 'typeorm'
+import { Entity, Index } from 'typeorm'
 import { StringValidator } from '@/common/decorators/class-validator/string.decorator'
 import { EnumValidator } from '@/common/decorators/class-validator/enum.decorator'
 import { NumberValidator } from '@/common/decorators/class-validator/number.decorator'
+import { ForeignKeyColumn } from '@/common/decorators/typeorm/foreign-key.decorator'
+import { CharColumn } from '@/common/decorators/typeorm/char.decorator'
+import { EnumColumn } from '@/common/decorators/typeorm/enum.decorator'
+import { TinyintColumn } from '@/common/decorators/typeorm/tinyint.decorator'
 
 @Entity({ name: 'sys_role' })
 export class RoleEntity extends BaseEntity {
-  @Column({
-    nullable: true,
+  @ForeignKeyColumn({
     comment: '租户id',
   })
   @StringValidator()
   tenantId: string
 
   @Index()
-  @Column({
+  @CharColumn({
     length: 32,
     comment: '名称',
   })
@@ -24,23 +27,19 @@ export class RoleEntity extends BaseEntity {
   })
   name: string
 
-  @Column({
-    default: '',
+  @CharColumn({
     comment: '备注',
   })
   @StringValidator()
   remarks: string
 
-  @Column({
-    type: 'enum',
-    enum: EAccountType,
+  @EnumColumn(EAccountType, {
     comment: '账户类型',
   })
   @EnumValidator(EAccountType)
   accountType: EAccountType
 
-  @Column('tinyint', {
-    default: 0,
+  @TinyintColumn({
     comment: '系统数据',
   })
   @NumberValidator()

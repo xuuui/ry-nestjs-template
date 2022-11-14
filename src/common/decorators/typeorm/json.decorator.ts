@@ -1,13 +1,14 @@
 import { applyDecorators } from '@nestjs/common'
-import { ColumnOptions, Column } from 'typeorm'
+import { Column } from 'typeorm'
+import { ColumnCommonOptions } from 'typeorm/decorator/options/ColumnCommonOptions'
 
-export interface JsonColumnOptions extends ColumnOptions {
+export type JsonColumnOptions = ColumnCommonOptions & {
   defaultValue?: Array<any> | Object
 }
 
 /**
  * @description: JSON字段
- * @param {ColumnOptions} options
+ * @param {JsonColumnOptions} options
  * @return {*}
  */
 export function JsonColumn(options?: JsonColumnOptions) {

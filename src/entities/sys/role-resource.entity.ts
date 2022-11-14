@@ -1,18 +1,17 @@
 import { BaseEntity } from '@/common/base/base.entity'
 import { StringValidator } from '@/common/decorators/class-validator/string.decorator'
-import { Column, Entity, Index } from 'typeorm'
+import { ForeignKeyColumn } from '@/common/decorators/typeorm/foreign-key.decorator'
+import { Entity } from 'typeorm'
 
 @Entity({ name: 'sys_role_resource' })
 export class RoleResourceEntity extends BaseEntity {
-  @Index()
-  @Column({
+  @ForeignKeyColumn({
     comment: '角色id',
   })
   @StringValidator()
   roleId: string
 
-  @Index()
-  @Column({
+  @ForeignKeyColumn({
     comment: '资源id',
   })
   @StringValidator()

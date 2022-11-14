@@ -1,27 +1,26 @@
 import { BaseEntity } from '@/common/base/base.entity'
 import { NumberValidator } from '@/common/decorators/class-validator/number.decorator'
 import { StringValidator } from '@/common/decorators/class-validator/string.decorator'
-import { Column, Entity, Index } from 'typeorm'
+import { ForeignKeyColumn } from '@/common/decorators/typeorm/foreign-key.decorator'
+import { IntColumn } from '@/common/decorators/typeorm/int.decorator'
+import { Entity } from 'typeorm'
 
 @Entity({ name: 'sys_resource_tree' })
 export class ResourceTreeEntity extends BaseEntity {
-  @Index()
-  @Column({
-    nullable: true,
+  @ForeignKeyColumn({
     comment: '祖先id',
   })
   @StringValidator()
   ancestorId: string
 
-  @Column({
+  @IntColumn({
     comment: '相对祖先的层级',
   })
   @NumberValidator()
   level: number
 
-  @Index()
-  @Column({
-    nullable: true,
+  @ForeignKeyColumn({
+    comment: '当前资源id',
   })
   @StringValidator()
   resourceId: string

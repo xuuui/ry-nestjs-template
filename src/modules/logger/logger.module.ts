@@ -8,6 +8,7 @@ export class LoggerModule {
     const loggers = [Log4jLoggerService, ...prefixedLoggerProviders]
     return {
       module: LoggerModule,
+      global: true,
       providers: loggers,
       exports: loggers,
     }

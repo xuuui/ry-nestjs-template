@@ -3,27 +3,29 @@ import { EnumValidator } from '@/common/decorators/class-validator/enum.decorato
 import { NumberValidator } from '@/common/decorators/class-validator/number.decorator'
 import { NumericValidator } from '@/common/decorators/class-validator/numeric.decorator'
 import { StringValidator } from '@/common/decorators/class-validator/string.decorator'
+import { CharColumn } from '@/common/decorators/typeorm/char.decorator'
+import { EnumColumn } from '@/common/decorators/typeorm/enum.decorator'
+import { ForeignKeyColumn } from '@/common/decorators/typeorm/foreign-key.decorator'
+import { TinyintColumn } from '@/common/decorators/typeorm/tinyint.decorator'
 import { EDictType } from '@/common/enums/sys.enum'
-import { Column, Entity, Index } from 'typeorm'
+import { Entity, Index } from 'typeorm'
 
 @Entity({ name: 'sys_dict' })
 export class DictEntity extends BaseEntity {
-  @Index()
-  @Column({
-    nullable: true,
+  @ForeignKeyColumn({
     comment: '父级id',
   })
   @StringValidator()
   parentId: string
 
   @Index()
-  @Column({
+  @CharColumn({
     comment: '编码',
   })
   @StringValidator()
   code: string
 
-  @Column({
+  @CharColumn({
     length: 32,
     comment: '名称',
   })
@@ -32,29 +34,25 @@ export class DictEntity extends BaseEntity {
   })
   label: string
 
-  @Column({
+  @CharColumn({
     comment: '值',
   })
   @NumericValidator()
   value: string
 
-  @Column({
-    type: 'enum',
-    enum: EDictType,
+  @EnumColumn(EDictType, {
     comment: '类型',
   })
   @EnumValidator(EDictType)
   type: EDictType
 
-  @Column({
-    default: '',
+  @CharColumn({
     comment: '备注',
   })
   @StringValidator()
   remarks: string
 
-  @Column('tinyint', {
-    default: 0,
+  @TinyintColumn({
     comment: '系统数据',
   })
   @NumberValidator()

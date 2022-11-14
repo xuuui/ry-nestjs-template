@@ -1,6 +1,6 @@
 import { registerAs } from '@nestjs/config'
-import type { WxConfig } from './types'
-import { mergeEnvConfig } from './utils'
+import type { WxConfig } from '../common/interfaces/config'
+import { mergeEnvConfig } from './util'
 
 const config: WxConfig = {
   offiaccount: {

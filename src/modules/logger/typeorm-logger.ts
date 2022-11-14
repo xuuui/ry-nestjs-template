@@ -1,15 +1,17 @@
 import { QueryRunner } from 'typeorm'
 import log4js from 'log4js'
+import { TypeormConfig } from '@/common/interfaces/config'
 
 export class TypeOrmLogger {
   private readonly logger: log4js.Logger
 
-  constructor() {
+  constructor(private readonly config: TypeormConfig) {
     this.logger = log4js.getLogger('TypeOrm')
     this.logger.addContext('context', 'TypeOrm')
   }
 
   logQuery(query: string, parameters?: any[], queryRunner?: QueryRunner) {
+    if (!this.config?.logging) return
     this.logger.info(query)
   }
 
@@ -19,6 +21,7 @@ export class TypeOrmLogger {
     parameters?: any[],
     queryRunner?: QueryRunner,
   ) {
+    if (!this.config?.logging) return
     this.logger.error(query, error)
   }
 
@@ -28,18 +31,22 @@ export class TypeOrmLogger {
     parameters?: any[],
     queryRunner?: QueryRunner,
   ) {
+    if (!this.config?.logging) return
     this.logger.info(query, time)
   }
 
   logSchemaBuild(message: string, queryRunner?: QueryRunner) {
+    if (!this.config?.logging) return
     this.logger.info(message)
   }
 
   logMigration(message: string, queryRunner?: QueryRunner) {
+    if (!this.config?.logging) return
     this.logger.info(message)
   }
 
   log(level: 'log' | 'info' | 'warn', message: any, queryRunner?: QueryRunner) {
+    if (!this.config?.logging) return
     switch (level) {
       case 'info': {
         this.logger.info(message)

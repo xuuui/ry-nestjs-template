@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { ensureDirSync, writeFileSync } from 'fs-extra'
-import imagemin from 'imagemin'
-import imageminPngquant from 'imagemin-pngquant'
-import imageminMozjpeg from 'imagemin-mozjpeg'
+// import imagemin from 'imagemin'
+// import imageminPngquant from 'imagemin-pngquant'
+// import imageminMozjpeg from 'imagemin-mozjpeg'
 import { join, extname } from 'path'
 import { UploadedFile } from 'express-fileupload'
 import { getNanoid } from '@/utils/func'
@@ -21,9 +21,10 @@ export class UploadService {
   ) {}
 
   async compressImage(buffer: Buffer) {
-    return await imagemin.buffer(buffer, {
-      plugins: [imageminMozjpeg(), imageminPngquant()],
-    })
+    return buffer
+    // return await imagemin.buffer(buffer, {
+    //   plugins: [imageminMozjpeg(), imageminPngquant()],
+    // })
   }
 
   async saveFile(file: UploadedFile) {

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common'
+import { Global, Module } from '@nestjs/common'
 import { CronTaskModule } from './cron-task/cron-task.module'
 import { EventModule } from './event/event.module'
 import { JwtAuthModule } from './jwt-auth/jwt-auth.module'
@@ -15,6 +15,7 @@ const modules = [
   WxModule,
 ]
 
+@Global()
 @Module({
   imports: [...modules],
   exports: [...modules],

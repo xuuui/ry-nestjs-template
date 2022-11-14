@@ -29,7 +29,10 @@ export class OperateLogService extends BaseService<OperateLogEntity> {
   }
 
   @Transaction()
-  async createOperateLog(options: OperateLogOptions): Promise<void> {
+  async createOperateLog(
+    options: OperateLogOptions,
+    error?: Error | string,
+  ): Promise<void> {
     try {
       const manager = useTransaction()
       const authInfo = this.app.getAuthInfo()
@@ -54,6 +57,8 @@ export class OperateLogService extends BaseService<OperateLogEntity> {
         reqBody: req.body,
         apiPath: req.path,
         accountType: authInfo.accountType,
+        state: !!error ? 0 : 1,
+        errMsg: error ? error.toString() : '',
       })
     } catch (error) {
       this.logger.error({ ...this.logger.getHttpLogInfo(), error })

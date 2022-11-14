@@ -102,6 +102,14 @@ export class AppService {
   }
 
   /**
+   * @description: 获取文件真实路径
+   * @return {string}
+   */
+  getFilePath(url: string): string {
+    return url.replace(`${this.getHost()}/`, '')
+  }
+
+  /**
    * @description: 获取登录账户信息
    * @return {string}
    */

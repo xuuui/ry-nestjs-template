@@ -1,6 +1,6 @@
 import { registerAs } from '@nestjs/config'
-import type { RedisConfig } from './types'
-import { getRedisUrl, mergeEnvConfig } from './utils'
+import type { RedisConfig } from '../common/interfaces/config'
+import { getRedisUrl, mergeEnvConfig } from './util'
 
 const config: RedisConfig = {
   readyLog: true,

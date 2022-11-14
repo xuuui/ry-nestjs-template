@@ -1,22 +1,21 @@
 import { applyDecorators } from '@nestjs/common'
-import { Expose } from 'class-transformer'
-import { IsOptional, IsString, MaxLength, MinLength } from 'class-validator'
+import { IsString, MaxLength, MinLength } from 'class-validator'
+import {
+  BaseValidatorOptions,
+  getBaseValidatorDecorators,
+} from './base.decorator'
 
-export interface StringValidatorOptions {
+export type StringValidatorOptions = BaseValidatorOptions & {
   maxLength?: number
   minLength?: number
-  optional?: boolean
   each?: boolean
 }
 
 export function StringValidator(
   options?: StringValidatorOptions,
 ): PropertyDecorator {
-  const { each = false, maxLength, minLength, optional } = options || {}
-  const decorators: PropertyDecorator[] = [Expose()]
-  if (optional) {
-    decorators.push(IsOptional())
-  }
+  const { each = false, maxLength, minLength, ...baseOptions } = options || {}
+  const decorators = getBaseValidatorDecorators(baseOptions)
   if (maxLength) {
     decorators.push(MaxLength(options.maxLength))
   }

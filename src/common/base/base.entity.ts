@@ -1,16 +1,15 @@
-import { dateFormat } from '@/utils/func'
-import { Expose, Transform } from 'class-transformer'
-import { IsDateString } from 'class-validator'
 import {
   CreateDateColumn,
   DeleteDateColumn,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
+import { DateStringValidator } from '../decorators/class-validator/date-string.decorator'
+import { StringValidator } from '../decorators/class-validator/string.decorator'
 
 export abstract class BaseEntity {
-  @Expose()
   @PrimaryGeneratedColumn('uuid')
+  @StringValidator()
   id: string
 
   @CreateDateColumn({
@@ -18,9 +17,7 @@ export abstract class BaseEntity {
     type: 'datetime',
     comment: '创建时间',
   })
-  @Expose()
-  @Transform(({ value }) => dateFormat(value))
-  @IsDateString()
+  @DateStringValidator()
   createdAt: string
 
   @UpdateDateColumn({
@@ -28,9 +25,7 @@ export abstract class BaseEntity {
     type: 'datetime',
     comment: '更新时间',
   })
-  @Expose()
-  @Transform(({ value }) => dateFormat(value))
-  @IsDateString()
+  @DateStringValidator()
   updatedAt: string
 
   @DeleteDateColumn({
@@ -38,8 +33,6 @@ export abstract class BaseEntity {
     type: 'datetime',
     comment: '删除时间',
   })
-  @Expose()
-  @Transform(({ value }) => dateFormat(value))
-  @IsDateString()
+  @DateStringValidator()
   deletedAt: string
 }

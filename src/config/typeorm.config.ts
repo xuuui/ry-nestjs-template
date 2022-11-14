@@ -1,7 +1,7 @@
 import { registerAs } from '@nestjs/config'
 import { join } from 'path'
-import type { TypeormConfig } from './types'
-import { mergeEnvConfig, strToBool } from './utils'
+import type { TypeormConfig } from '../common/interfaces/config'
+import { mergeEnvConfig, strToBool } from './util'
 
 const config: TypeormConfig = {
   type: 'mysql',

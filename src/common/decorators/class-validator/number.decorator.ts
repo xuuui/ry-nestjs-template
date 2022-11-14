@@ -1,15 +1,13 @@
 import { applyDecorators } from '@nestjs/common'
-import { Expose } from 'class-transformer'
-import { IsNumber, IsOptional } from 'class-validator'
+import { IsNumber } from 'class-validator'
+import {
+  BaseValidatorOptions,
+  getBaseValidatorDecorators,
+} from './base.decorator'
 
-export interface NumberValidatorOptions {
-  optional?: boolean
-}
+export type NumberValidatorOptions = BaseValidatorOptions
 
 export function NumberValidator(options?: NumberValidatorOptions) {
-  const decorators: PropertyDecorator[] = [Expose()]
-  if (options?.optional) {
-    decorators.push(IsOptional())
-  }
+  const decorators = getBaseValidatorDecorators(options)
   return applyDecorators(...decorators, IsNumber())
 }

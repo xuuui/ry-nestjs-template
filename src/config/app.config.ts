@@ -1,6 +1,6 @@
 import { registerAs } from '@nestjs/config'
-import type { AppConfig } from './types'
-import { mergeEnvConfig } from './utils'
+import type { AppConfig } from '../common/interfaces/config'
+import { mergeEnvConfig } from './util'
 
 const config: AppConfig = {
   prefix: '',

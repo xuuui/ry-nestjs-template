@@ -1,16 +1,14 @@
 import { applyDecorators } from '@nestjs/common'
-import { Expose } from 'class-transformer'
-import { IsMobilePhone, IsOptional, ValidateIf } from 'class-validator'
+import { IsMobilePhone, ValidateIf } from 'class-validator'
+import {
+  BaseValidatorOptions,
+  getBaseValidatorDecorators,
+} from './base.decorator'
 
-export interface MobileValidatorOptions {
-  optional?: boolean
-}
+export type MobileValidatorOptions = BaseValidatorOptions
 
 export function MobileValidator(options?: MobileValidatorOptions) {
-  const decorators: PropertyDecorator[] = [Expose()]
-  if (options?.optional) {
-    decorators.push(IsOptional())
-  }
+  const decorators = getBaseValidatorDecorators(options)
   return applyDecorators(
     ...decorators,
     ValidateIf((obj, val) => !!val),

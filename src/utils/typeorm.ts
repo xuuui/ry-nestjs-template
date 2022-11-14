@@ -1,9 +1,8 @@
 import { DATE_TEMPLATE } from '@/common/constants/sys'
-import { applyDecorators } from '@nestjs/common'
 import dayjs from 'dayjs'
 import glob from 'glob'
 import { normalize, parse } from 'path'
-import { ColumnOptions, ValueTransformer, Column } from 'typeorm'
+import { ValueTransformer } from 'typeorm'
 import { dateFormat, toCamelCase } from './func'
 
 /**
@@ -29,14 +28,14 @@ export function loadEntities(entityDir: string): any[] {
  * @return {*}
  */
 export function datetimeTransformer(
-  template: string = DATE_TEMPLATE,
+  format: string = DATE_TEMPLATE,
 ): ValueTransformer {
   return {
     to: (val) => {
       return val ? dayjs(val).toDate() : null
     },
     from: (val) => {
-      return dateFormat(val, template)
+      return dateFormat(val, format)
     },
   }
 }

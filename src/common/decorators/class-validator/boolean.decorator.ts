@@ -1,15 +1,13 @@
 import { applyDecorators } from '@nestjs/common'
-import { Expose } from 'class-transformer'
-import { IsBoolean, IsOptional } from 'class-validator'
+import { IsBoolean } from 'class-validator'
+import {
+  BaseValidatorOptions,
+  getBaseValidatorDecorators,
+} from './base.decorator'
 
-export interface BooleanValidatorOptions {
-  optional?: boolean
-}
+export type BooleanValidatorOptions = BaseValidatorOptions
 
 export function BooleanValidator(options?: BooleanValidatorOptions) {
-  const decorators: PropertyDecorator[] = [Expose()]
-  if (options?.optional) {
-    decorators.push(IsOptional())
-  }
+  const decorators = getBaseValidatorDecorators(options)
   return applyDecorators(...decorators, IsBoolean())
 }

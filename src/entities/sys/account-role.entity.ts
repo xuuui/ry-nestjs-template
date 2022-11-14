@@ -1,19 +1,17 @@
 import { BaseEntity } from '@/common/base/base.entity'
 import { StringValidator } from '@/common/decorators/class-validator/string.decorator'
-import { Column, Entity, Index } from 'typeorm'
+import { ForeignKeyColumn } from '@/common/decorators/typeorm/foreign-key.decorator'
+import { Entity } from 'typeorm'
 
 @Entity({ name: 'sys_account_role' })
 export class AccountRoleEntity extends BaseEntity {
-  @Index()
-  @Column({
-    nullable: true,
+  @ForeignKeyColumn({
     comment: '账户id',
   })
   @StringValidator()
   accountId: string
 
-  @Index()
-  @Column({
+  @ForeignKeyColumn({
     comment: '角色id',
   })
   @StringValidator()

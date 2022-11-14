@@ -6,8 +6,8 @@ import {
   NestInterceptor,
 } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
-import { Observable } from 'rxjs'
-import { tap } from 'rxjs/operators'
+import { Observable, throwError } from 'rxjs'
+import { catchError, tap } from 'rxjs/operators'
 import { OPERATE_LOG, OPERATE_OPTIONS } from '@/common/constants/decorator'
 import { OperateLogService } from '@/modules/api/sys/operate-log/operate-log.service'
 import { OperateLogOptions } from '../interfaces/sys'
@@ -31,14 +31,23 @@ export class OperateLogInterceptor implements NestInterceptor {
       OPERATE_OPTIONS,
       targets,
     )
+    const isNeedLog = (): boolean => {
+      return (
+        this.app.isAuth() &&
+        this.app.getAuthInfo().accountType !== EAccountType.CLIENT &&
+        isOperateLog
+      )
+    }
 
     return next.handle().pipe(
+      catchError((err) => {
+        if (isNeedLog()) {
+          this.operateLog.createOperateLog(operateOptions, err)
+        }
+        return throwError(() => err)
+      }),
       tap(() => {
-        if (
-          this.app.isAuth() &&
-          this.app.getAuthInfo().accountType !== EAccountType.CLIENT &&
-          isOperateLog
-        ) {
+        if (isNeedLog()) {
           this.operateLog.createOperateLog(operateOptions)
         }
       }),

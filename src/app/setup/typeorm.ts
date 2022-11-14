@@ -1,4 +1,4 @@
-import { TypeormConfig } from '@/config/types'
+import { TypeormConfig } from '@/common/interfaces/config'
 import { TypeOrmLogger } from '@/modules/logger/typeorm-logger'
 import { ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
@@ -7,9 +7,10 @@ export function setupTypeorm() {
   return TypeOrmModule.forRootAsync({
     inject: [ConfigService],
     useFactory: (config: ConfigService) => {
+      const typeormConfig = config.get<TypeormConfig>('typeorm')
       return {
-        ...config.get<TypeormConfig>('typeorm'),
-        logger: new TypeOrmLogger(),
+        ...typeormConfig,
+        logger: new TypeOrmLogger(typeormConfig),
       }
     },
   })

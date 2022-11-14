@@ -1,18 +1,16 @@
 import { applyDecorators } from '@nestjs/common'
-import { Expose, Type } from 'class-transformer'
-import { IsOptional, ValidateNested } from 'class-validator'
+import { Type } from 'class-transformer'
+import { ValidateNested, ValidationOptions } from 'class-validator'
+import {
+  BaseValidatorOptions,
+  getBaseValidatorDecorators,
+} from './base.decorator'
 
-export interface NestedValidatorOptions {
-  optional?: boolean
-  each?: boolean
-}
+export type NestedValidatorOptions = BaseValidatorOptions & ValidationOptions
 
 export function NestedValidator(type: any, options?: NestedValidatorOptions) {
-  const { each = false, optional } = options || {}
-  const decorators: PropertyDecorator[] = [Expose()]
-  if (optional) {
-    decorators.push(IsOptional())
-  }
+  const { each = false, ...baseOptions } = options || {}
+  const decorators = getBaseValidatorDecorators(baseOptions)
   return applyDecorators(
     ...decorators,
     ValidateNested({

@@ -57,7 +57,6 @@ export class AnyExceptionFilter implements ExceptionFilter {
     res.status(ret.code).json(ret)
 
     const logInfo = this.logger.getHttpLogInfo()
-
     const context =
       exception instanceof HttpException
         ? `AnyExceptionFilter -> ${exception.name}`

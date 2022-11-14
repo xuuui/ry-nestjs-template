@@ -1,15 +1,13 @@
 import { applyDecorators } from '@nestjs/common'
-import { Expose } from 'class-transformer'
-import { IsEnum, IsOptional } from 'class-validator'
+import { IsEnum } from 'class-validator'
+import {
+  BaseValidatorOptions,
+  getBaseValidatorDecorators,
+} from './base.decorator'
 
-export interface EnumValidatorOptions {
-  optional?: boolean
-}
+export type EnumValidatorOptions = BaseValidatorOptions
 
 export function EnumValidator(entity: object, options?: EnumValidatorOptions) {
-  const decorators: PropertyDecorator[] = [Expose()]
-  if (options?.optional) {
-    decorators.push(IsOptional())
-  }
+  const decorators = getBaseValidatorDecorators(options)
   return applyDecorators(...decorators, IsEnum(entity))
 }

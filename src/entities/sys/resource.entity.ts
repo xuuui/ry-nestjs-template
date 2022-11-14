@@ -2,20 +2,23 @@ import { BaseEntity } from '@/common/base/base.entity'
 import { EnumValidator } from '@/common/decorators/class-validator/enum.decorator'
 import { NumberValidator } from '@/common/decorators/class-validator/number.decorator'
 import { StringValidator } from '@/common/decorators/class-validator/string.decorator'
+import { CharColumn } from '@/common/decorators/typeorm/char.decorator'
+import { EnumColumn } from '@/common/decorators/typeorm/enum.decorator'
+import { ForeignKeyColumn } from '@/common/decorators/typeorm/foreign-key.decorator'
+import { IntColumn } from '@/common/decorators/typeorm/int.decorator'
+import { TinyintColumn } from '@/common/decorators/typeorm/tinyint.decorator'
 import { EAccountType, EResourceType } from '@/common/enums/sys.enum'
-import { Column, Entity, Index } from 'typeorm'
+import { Entity } from 'typeorm'
 
 @Entity({ name: 'sys_resource' })
 export class ResourceEntity extends BaseEntity {
-  @Index()
-  @Column({
-    nullable: true,
+  @ForeignKeyColumn({
     comment: '父级id',
   })
   @StringValidator()
   parentId: string
 
-  @Column({
+  @CharColumn({
     length: 64,
     comment: '名称',
   })
@@ -24,7 +27,7 @@ export class ResourceEntity extends BaseEntity {
   })
   name: string
 
-  @Column({
+  @CharColumn({
     length: 32,
     comment: '标题',
   })
@@ -33,81 +36,73 @@ export class ResourceEntity extends BaseEntity {
   })
   title: string
 
-  @Column({
-    type: 'enum',
-    enum: EResourceType,
+  @EnumColumn(EResourceType, {
     comment: '类型: 路由 菜单 按钮',
   })
   @EnumValidator(EResourceType)
   type: EResourceType
 
-  @Column({
-    default: '',
+  @CharColumn({
     comment: '图标',
   })
   @StringValidator()
   icon: string
 
-  @Column({
+  @IntColumn({
     default: 0,
     comment: '排序',
   })
   @NumberValidator()
   sort: number
 
-  @Column({
-    default: '',
+  @CharColumn({
     comment: '权限编码',
   })
   @StringValidator()
   permission: string
 
-  @Column({
-    default: '',
+  @CharColumn({
     comment: '路由地址',
   })
   @StringValidator()
   path: string
 
-  @Column({
-    default: '',
+  @CharColumn({
     comment: '组件路径',
   })
   @StringValidator()
   component: string
 
-  @Column('tinyint', {
+  @TinyintColumn({
     default: 1,
     comment: '是否缓存',
   })
   @NumberValidator()
   isCache: number
 
-  @Column('tinyint', {
+  @TinyintColumn({
     default: 1,
     comment: '是否显示',
   })
   @NumberValidator()
   isVisible: number
 
-  @Column('tinyint', {
+  @TinyintColumn({
     default: 1,
-    comment: '1正常 0停用',
+    comment: '是否停用',
   })
   @NumberValidator()
   state: number
 
-  @Column({
-    type: 'enum',
-    enum: EAccountType,
-    comment: '账户平台',
+  @EnumColumn(EAccountType, {
+    comment: '账户类型',
   })
   @EnumValidator(EAccountType)
   accountType: EAccountType
 
-  @Column('tinyint', {
+  @IntColumn({
     default: 1,
-    comment: '系统数据',
+    comment: '是否系统数据',
   })
   @NumberValidator()
   isSys: number
