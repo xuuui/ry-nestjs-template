@@ -3,6 +3,7 @@ import { dateFormat } from '@/utils/func'
 import { applyDecorators } from '@nestjs/common'
 import { Transform } from 'class-transformer'
 import { IsDateString, ValidateIf } from 'class-validator'
+import dayjs from 'dayjs'
 import {
   BaseValidatorOptions,
   getBaseValidatorDecorators,
@@ -19,7 +20,7 @@ export function DateStringValidator(options?: DateStringValidatorOptions) {
     Transform(({ value }) => dateFormat(value, format)),
     ...decorators,
     ValidateIf((obj, value) => {
-      if (value === 'Invalid Date') return false
+      if (!dayjs(value).isValid()) return false
       return !!value
     }),
     IsDateString(),

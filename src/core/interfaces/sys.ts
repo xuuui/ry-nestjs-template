@@ -44,3 +44,7 @@ export interface OperateLogOptions {
   type: EOpertateType
   desc?: string | ((req: Request, res: Response) => string)
 }
+
+export interface ResCacheOptions {
+  expire?: number
+}

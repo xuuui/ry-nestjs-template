@@ -16,7 +16,7 @@ specifiers:
   '@nestjs/swagger': ^6.1.3
   '@nestjs/testing': ^9.0.0
   '@nestjs/typeorm': ^9.0.1
-  '@ry-nestjs/typeorm-query': 1.0.5
+  '@ry-nestjs/typeorm-query': 1.0.6
   '@ry-nestjs/typeorm-transactional-next': 1.0.5
   '@types/bcryptjs': ^2.4.2
   '@types/compression': ^1.7.2
@@ -94,7 +94,7 @@ dependencies:
   '@nestjs/serve-static': 3.0.0_pf2fb646rsvo5szivgkaevcpvi
   '@nestjs/swagger': 6.1.3_n5tlzb6gajrp65xewlgrtvzeqy
   '@nestjs/typeorm': 9.0.1_2ekyp7igf6cbpgvvmiypy4gzpu
-  '@ry-nestjs/typeorm-query': 1.0.5_ejfkl2fbu53xjxcy6etgcrx6bq
+  '@ry-nestjs/typeorm-query': 1.0.6_ejfkl2fbu53xjxcy6etgcrx6bq
   '@ry-nestjs/typeorm-transactional-next': 1.0.5_ejfkl2fbu53xjxcy6etgcrx6bq
   axios: 1.1.3
   bcryptjs: 2.4.3
@@ -1346,8 +1346,8 @@ packages:
     transitivePeerDependencies:
       - encoding
 
-  /@ry-nestjs/typeorm-query/1.0.5_ejfkl2fbu53xjxcy6etgcrx6bq:
-    resolution: {integrity: sha512-P2QNUSFeKU/cfmeKfyVaZOEKiAYPXBbwYT7S1AdVqFrV61TsfA5ESkQDHFi+JxMJXZULS4FCGnMTJ8mu/yJ/iQ==}
+  /@ry-nestjs/typeorm-query/1.0.6_ejfkl2fbu53xjxcy6etgcrx6bq:
+    resolution: {integrity: sha512-gSWKTtzyMZ82e2IWrDw56fcWPKNFqqhFm714I+VKuUvSWJKHu9zjeaLvexknvYsnyCNfRHlBcB2165+PdXxVOg==}
     dependencies:
       '@nestjsx/crud-request': 5.0.0-alpha.3
       lodash: 4.17.21

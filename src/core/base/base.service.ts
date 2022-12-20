@@ -47,7 +47,8 @@ export class BaseService<T extends BaseEntity> {
     parsed: ParsedQueryParams,
   ): Promise<T[] | PaginationDto<T>> {
     const builder = this.repo.createQueryBuilder()
-    return await QueryBuilder.create(builder).parseQuery(parsed).paginate()
+    const res = await QueryBuilder.create(builder).parseQuery(parsed).paginate()
+    return res
   }
 
   /**

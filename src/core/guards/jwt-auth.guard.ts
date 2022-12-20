@@ -1,7 +1,6 @@
 import { AppService } from '@/app/app.service'
 import { JwtAuthService } from '@/modules/shared/jwt-auth/jwt-auth.service'
 import { RedisCacheService } from '@/modules/shared/redis-cache/redis-cache.service'
-import { isNullOrUnDef } from '@/utils/is'
 import {
   Injectable,
   CanActivate,
@@ -10,6 +9,7 @@ import {
 } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 import { Request } from 'express'
+import { isNil } from 'lodash'
 import { JWT_AUTH } from '../constants/decorator'
 import { HTTP_HEADER_TOKEN } from '../constants/sys'
 
@@ -31,7 +31,7 @@ export class JwtAuthGuard implements CanActivate {
       context.getClass(),
     ])
 
-    isJwtAuth = isNullOrUnDef(isJwtAuth) ? DEFAULT_JWT_AUTH : isJwtAuth
+    isJwtAuth = isNil(isJwtAuth) ? DEFAULT_JWT_AUTH : isJwtAuth
 
     if (!isJwtAuth) return true
 

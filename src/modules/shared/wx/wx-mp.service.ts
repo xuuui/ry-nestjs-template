@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { Inject, Injectable } from '@nestjs/common'
 import { RedisCacheService } from '../redis-cache/redis-cache.service'
 import { ConfigType } from '@nestjs/config'
@@ -16,14 +15,15 @@ import wxConfig from '@/config/wx.config'
 import { EThirdPlatform } from '@/core/enums/sys.enum'
 import { join } from 'path'
 import { AppService } from '@/app/app.service'
+import wxHttp from './http'
+import { options } from 'svg-captcha'
 
 const URL_MAP = {
-  jscode2session: 'https://api.weixin.qq.com/sns/jscode2session',
-  getwxacodeunlimit: 'https://api.weixin.qq.com/wxa/getwxacodeunlimit',
-  token: 'https://api.weixin.qq.com/cgi-bin/token',
-  getuserphonenumber:
-    'https://api.weixin.qq.com/wxa/business/getuserphonenumber',
-  subscribesend: 'https://api.weixin.qq.com/cgi-bin/message/subscribe/send',
+  jscode2session: '/sns/jscode2session',
+  getwxacodeunlimit: '/wxa/getwxacodeunlimit',
+  token: '/cgi-bin/token',
+  getuserphonenumber: '/wxa/business/getuserphonenumber',
+  subscribesend: '/cgi-bin/message/subscribe/send',
 }
 
 @Injectable()
@@ -55,7 +55,7 @@ export class WxMpService {
   }
 
   async code2Session(code: string): Promise<any> {
-    const { data } = await axios.get(URL_MAP.jscode2session, {
+    const res = await wxHttp.get(URL_MAP.jscode2session, {
       params: {
         appid: this.appId,
         secret: this.appSecret,
@@ -63,19 +63,14 @@ export class WxMpService {
         grant_type: 'authorization_code',
       },
     })
-
-    if (data?.errcode) {
-      throw new Error(data.errmsg)
-    }
-
-    return data
+    return res.data
   }
 
   async isAccessTokenExpired(acceccToken: string): Promise<boolean> {
-    const url = URL_MAP.getwxacodeunlimit + `?access_token=${acceccToken}`
-    const { data } = await axios.post(url)
+    const url = `${URL_MAP.getwxacodeunlimit}?access_token=${acceccToken}`
+    const res = await wxHttp.post(url)
     // 如果 40001说明accesstoken过期，则重新获取
-    if (data.errcode === 40001) {
+    if (res.data.errcode === 40001) {
       return true
     }
     return false
@@ -88,22 +83,19 @@ export class WxMpService {
       acceccToken = null
     }
     if (!acceccToken) {
-      const { data } = await axios.get(URL_MAP.token, {
+      const res = await wxHttp.get(URL_MAP.token, {
         params: {
           appid: this.appId,
           secret: this.appSecret,
           grant_type: 'client_credential',
         },
       })
-      if (data?.errcode) {
-        throw new Error(data.errmsg)
-      }
       await this.redisCache.set(
         this.acceccTokenKey,
-        data.access_token,
-        data.expires_in - 10,
+        res.data.access_token,
+        res.data.expires_in - 10,
       )
-      return data.access_token
+      return res.data.access_token
     }
     return acceccToken
   }
@@ -114,15 +106,12 @@ export class WxMpService {
   }
 
   async getPhoneNumber(code: string): Promise<string> {
-    const url =
-      URL_MAP.getuserphonenumber +
-      `?access_token=${await this.getAccessToken()}`
-    const res = await axios.post(url, {
+    const url = `${
+      URL_MAP.getuserphonenumber
+    }?access_token=${await this.getAccessToken()}`
+    const res = await wxHttp.post(url, {
       code,
     })
-    if (res.data?.errcode) {
-      throw new Error(res.data.errmsg)
-    }
     return res.data?.phone_info?.phoneNumber || ''
   }
 
@@ -210,25 +199,25 @@ export class WxMpService {
     page?: string,
     miniprogramState: string = 'formal',
   ): Promise<boolean> {
-    const url =
-      URL_MAP.subscribesend + `?access_token=${await this.getAccessToken()}`
-    const res = await axios.post(url, {
+    const url = `${
+      URL_MAP.subscribesend
+    }?access_token=${await this.getAccessToken()}`
+    const res = await wxHttp.post(url, {
       touser: userOpenid,
       template_id: templateId,
       data: data,
       page,
       miniprogram_state: miniprogramState,
     })
-    if (res.data?.errcode) {
-      throw new Error(res.data.errmsg)
-    }
     return true
   }
 
-  async getQrCode({ scene, page }: { scene: string; page: string }) {
-    const url =
-      URL_MAP.getwxacodeunlimit + `?access_token=${await this.getAccessToken()}`
-    const res = await axios.post(
+  async getQrCode(options: { scene: string; page: string }) {
+    const { scene, page } = options
+    const url = `${
+      URL_MAP.getwxacodeunlimit
+    }?access_token=${await this.getAccessToken()}`
+    const res = await wxHttp.post(
       url,
       {
         scene,
@@ -238,9 +227,6 @@ export class WxMpService {
         responseType: 'arraybuffer',
       },
     )
-    if (res.data?.errcode) {
-      throw new Error(res.data.errmsg)
-    }
     return res.data
   }
 }

@@ -13,9 +13,6 @@ const config: AppConfig = {
     username: 'admin',
     password: '123456',
   },
-  upload: {
-    imageCompressSize: 1024 * 1024 * 0.4,
-  },
 }
 
 export default registerAs('app', (): AppConfig => {

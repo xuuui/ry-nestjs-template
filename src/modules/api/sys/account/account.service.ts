@@ -18,6 +18,7 @@ import {
   Transaction,
   useTransaction,
 } from '@ry-nestjs/typeorm-transactional-next'
+import { isDate } from 'lodash'
 import { DataSource, FindOptionsWhere, In, Not } from 'typeorm'
 import { CreateAdminAccountDto } from './dto/create-admin-account.dto'
 import { CreateClientAccountDto } from './dto/create-client-account.dto'
@@ -242,11 +243,12 @@ export class AccountService extends BaseService<AccountEntity> {
   async updateClient(updateDto: UpdateClientAccountDto): Promise<boolean> {
     const manager = useTransaction()
     const { id, user: updateUserDto, ...updateAccountDto } = updateDto
-    let username = ''
 
     const account = await manager.findOneByOrFail(AccountEntity, {
       id,
     })
+
+    let username = ''
     if (updateAccountDto?.mobile) {
       await this.checkMobileExist({
         mobile: updateAccountDto.mobile,

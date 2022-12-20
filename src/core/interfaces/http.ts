@@ -1,6 +1,6 @@
 export interface HttpResponse {
   code: number
-  result?: Record<string, any>
+  result?: Recordable
   status: string | boolean
   message: string
 }

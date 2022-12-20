@@ -11,7 +11,7 @@ import { EHttpStatus } from '@/core/enums/sys.enum'
 import { HttpResponse } from '@/core/interfaces/http'
 import { Reflector } from '@nestjs/core'
 import { RES_TRANSFORM } from '@/core/constants/decorator'
-import { isNullOrUnDef } from '@/utils/is'
+import { isNil } from 'lodash'
 
 const DEFAULT_RES_TRANSFORM = true
 
@@ -34,7 +34,7 @@ export class ResTransformInterceptor implements NestInterceptor {
           [context.getHandler(), context.getClass()],
         )
 
-        isResTransform = isNullOrUnDef(isResTransform)
+        isResTransform = isNil(isResTransform)
           ? DEFAULT_RES_TRANSFORM
           : isResTransform
 
@@ -42,7 +42,7 @@ export class ResTransformInterceptor implements NestInterceptor {
 
         return {
           code: res.statusCode,
-          result: isNullOrUnDef(data) ? {} : data,
+          result: isNil(data) ? null : data,
           status: EHttpStatus.SUCCESS,
           message: 'The action is successful',
         }

@@ -1,9 +1,10 @@
+import { jsonTransformer } from '@/utils/typeorm'
 import { applyDecorators } from '@nestjs/common'
 import { Column } from 'typeorm'
 import { ColumnCommonOptions } from 'typeorm/decorator/options/ColumnCommonOptions'
 
-export type JsonColumnOptions = ColumnCommonOptions & {
-  defaultValue?: Array<any> | Object
+export type JsonColumnOptions<T> = ColumnCommonOptions & {
+  defaultValue?: T
 }
 
 /**
@@ -11,18 +12,11 @@ export type JsonColumnOptions = ColumnCommonOptions & {
  * @param {JsonColumnOptions} options
  * @return {*}
  */
-export function JsonColumn(options?: JsonColumnOptions) {
+export function JsonColumn<T>(options?: JsonColumnOptions<T>) {
   const { defaultValue = {}, ...columnOptions } = options || {}
   return applyDecorators(
     Column('longtext', {
-      transformer: {
-        to: (val) => {
-          return JSON.stringify(val)
-        },
-        from: (val) => {
-          return JSON.parse(val || JSON.stringify(defaultValue))
-        },
-      },
+      transformer: jsonTransformer(defaultValue),
       ...columnOptions,
     }),
   )

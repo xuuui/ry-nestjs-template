@@ -8,7 +8,7 @@ import {
 import { Reflector } from '@nestjs/core'
 import { Observable, throwError } from 'rxjs'
 import { catchError, tap } from 'rxjs/operators'
-import { OPERATE_LOG, OPERATE_OPTIONS } from '@/core/constants/decorator'
+import { OPERATE_LOG, OPERATE_LOG_OPTIONS } from '@/core/constants/decorator'
 import { OperateLogService } from '@/modules/api/sys/operate-log/operate-log.service'
 import { OperateLogOptions } from '../interfaces/sys'
 import { EAccountType } from '../enums/sys.enum'
@@ -28,7 +28,7 @@ export class OperateLogInterceptor implements NestInterceptor {
       targets,
     )
     const operateOptions = this.reflector.getAllAndOverride<OperateLogOptions>(
-      OPERATE_OPTIONS,
+      OPERATE_LOG_OPTIONS,
       targets,
     )
     const isNeedLog = (): boolean => {

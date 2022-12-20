@@ -3,9 +3,9 @@ import { RedisCacheService } from '../redis-cache/redis-cache.service'
 
 import { ConfigType } from '@nestjs/config'
 import { AccessTokenApi, ApiConfig, ApiConfigKit } from 'tnwx'
-import axios from 'axios'
 import appConfig from '@/config/app.config'
 import wxConfig from '@/config/wx.config'
+import wxHttp from './http'
 
 @Injectable()
 export class WxGzhService {
@@ -30,15 +30,10 @@ export class WxGzhService {
 
   async getUserInfo(openid: string) {
     const accessToken = await AccessTokenApi.getAccessToken()
-    const url =
-      'https://api.weixin.qq.com/cgi-bin/user/info' +
-      `?access_token=${accessToken.getAccessToken}`
-    const res = await axios.get(url, {
+    const url = `/cgi-bin/user/info?access_token=${accessToken.getAccessToken}`
+    const res = await wxHttp.get(url, {
       params: { openid },
     })
-    if (res.data?.errcode) {
-      throw new Error(res.data.errmsg)
-    }
     return res.data
   }
 }

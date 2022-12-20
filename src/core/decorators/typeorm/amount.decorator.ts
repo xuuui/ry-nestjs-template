@@ -1,3 +1,4 @@
+import { numberTransformer } from '@/utils/typeorm'
 import { applyDecorators } from '@nestjs/common'
 import { Column } from 'typeorm'
 import { ColumnCommonOptions } from 'typeorm/decorator/options/ColumnCommonOptions'
@@ -18,10 +19,7 @@ export function AmountColumn(options?: AmountColumnOptions) {
       default: 0,
       precision: 10,
       scale: 2,
-      transformer: {
-        from: Number,
-        to: (val) => val,
-      },
+      transformer: numberTransformer(),
       ...columnOptions,
     }),
   )

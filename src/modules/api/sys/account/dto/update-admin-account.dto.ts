@@ -10,11 +10,6 @@ import { UpdateUserDto } from '../../user/dto/update-user.dto'
 export class UpdateAdminAccountDto extends IntersectionType(UpdateDto, SysDto) {
   @StringValidator({
     optional: true,
-  })
-  shopId?: string
-
-  @StringValidator({
-    optional: true,
     maxLength: 24,
     minLength: 6,
   })

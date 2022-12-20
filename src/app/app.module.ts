@@ -3,7 +3,6 @@ import { ClassSerializerInterceptor, Global, Module } from '@nestjs/common'
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
-import { ClsModule } from 'nestjs-cls'
 import { SharedModule } from '@/modules/shared/shared.module'
 import { AnyExceptionFilter } from '@/core/filters/any-exception.filter'
 import { ResTransformInterceptor } from '@/core/interceptors/res-transform.interceptor'
@@ -20,6 +19,7 @@ import { setupServeStatic } from './setup/serve-static'
 import { setupRateLimiter } from './setup/rate-limiter'
 import { setupTypeorm } from './setup/typeorm'
 import { setupCls } from './setup/cls'
+import { ResCacheInterceptor } from '@/core/interceptors/res-cache.interceptor'
 
 @Global()
 @Module({
@@ -51,15 +51,19 @@ import { setupCls } from './setup/cls'
     },
     {
       provide: APP_INTERCEPTOR,
-      useClass: ResTransformInterceptor,
-    },
-    {
-      provide: APP_INTERCEPTOR,
       useClass: LoggerInterceptor,
     },
     {
       provide: APP_INTERCEPTOR,
       useClass: OperateLogInterceptor,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ResTransformInterceptor,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ResCacheInterceptor,
     },
     AppService,
   ],

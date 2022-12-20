@@ -33,7 +33,7 @@
     "@nestjs/serve-static": "^3.0.0",
     "@nestjs/swagger": "^6.1.3",
     "@nestjs/typeorm": "^9.0.1",
-    "@ry-nestjs/typeorm-query": "1.0.5",
+    "@ry-nestjs/typeorm-query": "1.0.6",
     "@ry-nestjs/typeorm-transactional-next": "1.0.5",
     "axios": "^1.1.3",
     "bcryptjs": "^2.4.3",

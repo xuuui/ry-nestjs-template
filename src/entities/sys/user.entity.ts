@@ -57,7 +57,7 @@ export class UserEntity extends BaseEntity {
   @DateStringValidator({
     format: BIRTH_DATE_TEMPLATE,
   })
-  birthDate: string
+  birthDate: Date
 
   @IntColumn({
     comment: '年龄',
@@ -66,7 +66,7 @@ export class UserEntity extends BaseEntity {
   age: number
 
   @CharColumn({
-    comment: '简介',
+    comment: '备注',
   })
   @StringValidator()
   remarks: string

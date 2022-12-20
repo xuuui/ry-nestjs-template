@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import glob from 'glob'
 import { normalize, parse } from 'path'
 import { ValueTransformer } from 'typeorm'
-import { dateFormat, toCamelCase } from './func'
+import { toCamelCase } from './func'
 
 /**
  * @description: 自动加载实体
@@ -24,7 +24,7 @@ export function loadEntities(entityDir: string): any[] {
 }
 
 /**
- * @description: typeorm datetime类型字段转换器
+ * @description: typeorm datetime转换器
  * @return {*}
  */
 export function datetimeTransformer(
@@ -32,10 +32,36 @@ export function datetimeTransformer(
 ): ValueTransformer {
   return {
     to: (val) => {
-      return val ? dayjs(val).toDate() : null
+      return dayjs(val).isValid() ? dayjs(val).toDate() : null
     },
     from: (val) => {
-      return dateFormat(val, format)
+      return val
+    },
+  }
+}
+
+/**
+ * @description: typeorm 数字转换器
+ * @return {*}
+ */
+export function numberTransformer(): ValueTransformer {
+  return {
+    from: Number,
+    to: (val) => val,
+  }
+}
+
+/**
+ * @description: typeorm json转换器
+ * @return {*}
+ */
+export function jsonTransformer<T>(defalutValue: T): ValueTransformer {
+  return {
+    to: (val: T): string => {
+      return JSON.stringify(val)
+    },
+    from: (val: string): T => {
+      return JSON.parse(val || JSON.stringify(defalutValue))
     },
   }
 }

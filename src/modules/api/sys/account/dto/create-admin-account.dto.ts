@@ -11,11 +11,6 @@ import { CreateUserDto } from '../../user/dto/create-user.dto'
 
 export class CreateAdminAccountDto extends SysDto {
   @StringValidator({
-    optional: true,
-  })
-  shopId?: string
-
-  @StringValidator({
     maxLength: 64,
   })
   username: string

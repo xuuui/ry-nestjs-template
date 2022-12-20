@@ -1,5 +1,5 @@
 import { applyDecorators, SetMetadata } from '@nestjs/common'
-import { OPERATE_LOG, OPERATE_OPTIONS } from '@/core/constants/decorator'
+import { OPERATE_LOG, OPERATE_LOG_OPTIONS } from '@/core/constants/decorator'
 import { OperateLogOptions } from '../interfaces/sys'
 
 /**
@@ -9,6 +9,6 @@ import { OperateLogOptions } from '../interfaces/sys'
 export function OperateLog(options?: OperateLogOptions) {
   return applyDecorators(
     SetMetadata(OPERATE_LOG, true),
-    SetMetadata(OPERATE_OPTIONS, options),
+    SetMetadata(OPERATE_LOG_OPTIONS, options),
   )
 }

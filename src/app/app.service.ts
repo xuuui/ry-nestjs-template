@@ -49,9 +49,6 @@ export class AppService {
    * @return {string}
    */
   getHost(): string {
-    if (this.appCfg.domain) {
-      return this.appCfg.domain
-    }
     const {
       headers: { host },
       protocol,

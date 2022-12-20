@@ -72,7 +72,7 @@ export class OperateLogEntity extends BaseEntity {
     comment: '操作时间',
   })
   @DateStringValidator()
-  operateTime: string
+  operateTime: Date
 
   @CharColumn({
     comment: '操作描述',

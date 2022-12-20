@@ -26,6 +26,7 @@ export class DictEntity extends BaseEntity {
   @StringValidator()
   code: string
 
+  @Index()
   @CharColumn({
     length: 32,
     comment: '名称',

@@ -58,20 +58,25 @@ export class DictService extends BaseService<DictEntity> {
     })
   }
 
-  @Transaction()
-  async createOne(createDto: CreateDictDto): Promise<DictModel> {
-    const manager = useTransaction()
-    if (createDto.type === EDictType.DICT) {
-      if (!createDto.code) {
+  async checkCode(code: string, type: EDictType, excludeId?: string) {
+    if (type === EDictType.DICT) {
+      if (!code) {
         throw new ActionFailException('请输入编码')
       }
       const isCodeExist = await this.isCodeExist({
-        value: createDto.code,
+        value: code,
+        excludeId,
       })
       if (isCodeExist) {
         throw new ActionFailException('编码已存在')
       }
     }
+  }
+
+  @Transaction()
+  async createOne(createDto: CreateDictDto): Promise<DictModel> {
+    const manager = useTransaction()
+    await this.checkCode(createDto.code, createDto.type)
     return await manager.save(DictEntity, createDto)
   }
 
@@ -80,18 +85,7 @@ export class DictService extends BaseService<DictEntity> {
     const manager = useTransaction()
     const { id, ...update } = updateDto
     await manager.findOneOrFail(DictEntity, { where: { id } })
-    if (update.type === EDictType.DICT) {
-      if (!updateDto.code) {
-        throw new ActionFailException('请输入编码')
-      }
-      const isCodeExist = await this.isCodeExist({
-        value: updateDto.code,
-        excludeId: id,
-      })
-      if (isCodeExist) {
-        throw new ActionFailException('编码已存在')
-      }
-    }
+    await this.checkCode(updateDto.code, updateDto.type, id)
     await manager.update(DictEntity, { id }, update)
     return true
   }

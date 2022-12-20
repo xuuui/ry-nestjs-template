@@ -18,7 +18,7 @@ export abstract class BaseEntity {
     comment: '创建时间',
   })
   @DateStringValidator()
-  createdAt: string
+  createdAt: Date
 
   @UpdateDateColumn({
     nullable: true,
@@ -26,7 +26,7 @@ export abstract class BaseEntity {
     comment: '更新时间',
   })
   @DateStringValidator()
-  updatedAt: string
+  updatedAt: Date
 
   @DeleteDateColumn({
     nullable: true,
@@ -34,5 +34,5 @@ export abstract class BaseEntity {
     comment: '删除时间',
   })
   @DateStringValidator()
-  deletedAt: string
+  deletedAt: Date
 }

@@ -2,6 +2,7 @@ import { MobileValidator } from '@/core/decorators/class-validator/mobile.decora
 import { NestedValidator } from '@/core/decorators/class-validator/nested.decorator'
 import { NumberValidator } from '@/core/decorators/class-validator/number.decorator'
 import { UpdateDto } from '@/core/dto/update.dto'
+import { OmitType } from '@nestjs/swagger'
 import { UpdateUserDto } from '../../user/dto/update-user.dto'
 
 export class UpdateClientAccountDto extends UpdateDto {
@@ -15,7 +16,7 @@ export class UpdateClientAccountDto extends UpdateDto {
   })
   state?: number
 
-  @NestedValidator(UpdateUserDto, {
+  @NestedValidator(OmitType(UpdateUserDto, ['id']), {
     optional: true,
   })
   user?: UpdateUserDto

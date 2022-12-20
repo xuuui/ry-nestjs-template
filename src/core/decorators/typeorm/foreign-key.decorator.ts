@@ -15,6 +15,14 @@ export function ForeignKeyColumn(options?: ForeignKeyColumnOptions) {
     Column({
       nullable: true,
       ...columnOptions,
+      transformer: {
+        to: (val: string) => {
+          return val || null
+        },
+        from: (val: string) => {
+          return val || null
+        },
+      },
     }),
   )
 }

@@ -1,5 +1,4 @@
 import { DATE_TEMPLATE } from '@/core/constants/sys'
-import { datetimeTransformer } from '@/utils/typeorm'
 import { applyDecorators } from '@nestjs/common'
 import { Column } from 'typeorm'
 import { ColumnCommonOptions } from 'typeorm/decorator/options/ColumnCommonOptions'
@@ -20,7 +19,6 @@ export function DatetimeColumn(options?: DatetimeColumnOptions) {
   return applyDecorators(
     Column('datetime', {
       nullable: true,
-      transformer: datetimeTransformer(format),
       ...columnOptions,
     }),
   )
